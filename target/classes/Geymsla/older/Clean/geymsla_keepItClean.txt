@@ -1,0 +1,215 @@
+       public static void playMedia(int key) {
+           Media media = mediasKeyMap.get(key);
+           MediaPlayer mediaPlayer = PLAYING_MEDIA_PLAYERS.poll();
+           if (mediaPlayer == null) {
+               mediaPlayer = new MediaPlayer(media);
+               MediaPlayer finalMediaPlayer = mediaPlayer;
+               finalMediaPlayer.play();
+               mediaPlayer.setOnEndOfMedia(() -> {
+                   PLAYING_MEDIA_PLAYERS.remove(finalMediaPlayer);
+                   System.out.println(PLAYING_MEDIA_PLAYERS.poll().getMedia().toString() + "removed");
+                   finalMediaPlayer.stop();
+               });
+           } else {
+               mediaPlayer.stop();
+               mediaPlayer = new MediaPlayer(media);
+               mediaPlayer.play();
+           }
+       }
+
+    /*
+    private Map<Button, MediaPlayer> padIdMap(Button[] buttons) {
+        Map<Button, MediaPlayer> map = new HashMap<>();
+        for (Button button : buttons) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            map.put(button, mediaPlayer);
+        }
+        return map;
+    }
+    private void keysDrumPlay(int index) {
+        currentSamplePack[index].stop();
+        currentSamplePack[index].seek(Duration.ZERO);
+        currentSamplePack[index].play();
+    }
+    private void mouseDrumPlay(int index) {
+        currentSamplePack[index].stop();
+        currentSamplePack[index].seek(Duration.ZERO);
+        currentSamplePack[index].play();
+    }
+  */
+
+    private Map<String, MediaPlayer> padIdMap = new HashMap<>();
+
+
+  // String path = e.getDragboard().getFiles().iterator().next().getPath().toString();
+
+       // ModuleLayer.Controller padController = fxmlLoader.getController();
+
+       /* if (mediaPlayer != null) {
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(0.05), new KeyValue(mediaPlayer.volumeProperty(), 0)));
+                timeline.setOnFinished(event -> {
+                    mediaPlayer.stop();
+                    mediaPlayer.play();
+                    Timeline timeline2 = new Timeline(
+                            new KeyFrame(Duration.seconds(0.001), new KeyValue(mediaPlayer.volumeProperty(), 1)));
+                    timeline2.play();
+                });
+                timeline.play();
+            } else {
+                mediaPlayer.play();
+            }
+        }
+    }
+            þarf að gera dispose method?
+            if (mediaPlayers.size() > N) {
+                MediaPlayer oldestPlayer = mediaPlayers.poll();
+                oldestPlayer.dispose();
+
+                Til að nota sama media player ef það er það sama media:
+
+                        for (MediaPlayer mp : mediaPlayers) {   // check if media is already playing
+                            if (mp.getMedia().equals(media)) {
+                                if (mp.getStatus() == MediaPlayer.Status.PLAYING){ // get rid of click when media is restarted
+                                    mp.stop();
+                                    mp.seek(Duration.ZERO);
+                                    mp.play();
+                                    return;
+                                }
+                                mp.stop();
+                                mp.seek(Duration.ZERO);
+                                mp.play();
+                                return;
+                            } }
+    /*
+    public static void stopMedia(int key) {
+        MediaPlayer mediaPlayer = mediaPlayers.get(key);
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
+          /*  for (int oct = 0; oct < 4; oct++) {
+                for (keyIndex = 0; keyIndex < 8; keyIndex++) {
+                    if (e.getCode() == KeyCode.DIGIT0 )  */
+
+
+                                <plugin>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-shade-plugin</artifactId>
+                                    <version>3.4.1</version>
+                                    <executions>
+                                        <execution>
+                                            <phase>package</phase>
+                                            <goals>
+                                                <goal>shade</goal>
+                                            </goals>
+                                            <configuration>
+                                                <transformers>
+                                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                                        <manifestEntries>
+                                                            <Main-Class>keynotes.vidmot.Main</Main-Class>
+                                                            <Build-Number>123</Build-Number>
+                                                        </manifestEntries>
+                                                    </transformer>
+                                                </transformers>
+                                            </configuration>
+                                        </execution>
+                                    </executions>
+                                </plugin>
+
+
+        <Button fx:id="fxButtonFxUI" mnemonicParsing="false" onAction="#onButtonFxUI" prefHeight="30.0" prefWidth="137.0" text="+" BorderPane.alignment="TOP_LEFT">
+         <graphic>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+
+
+            if (e.isShiftDown()) { transposition += 12; }
+            if (e.isShortcutDown()) { transposition -= 12; }
+
+            if ( fxMinorMajor.getText().equals("Sharp") && (keyIndex == 1 || keyIndex == 3 || keyIndex == 6 || keyIndex == 8 || keyIndex == 10 || keyIndex == 13 || keyIndex == 15 || keyIndex == 18 || keyIndex == 20 || keyIndex == 22 || keyIndex == 25 || keyIndex == 27 || keyIndex == 30 || keyIndex == 32 || keyIndex == 34 || keyIndex == 37 || keyIndex == 39 || keyIndex == 42 || keyIndex == 44 || keyIndex == 46 || keyIndex == 49 || keyIndex == 51 || keyIndex == 53) )
+               keyIndex++;
+
+
+
+               prófa feidát fyrir kallað á í onkeyReleased
+                   public static void fadeOut() {
+                       for ( MediaPlayer mp : mediaPlayers ) {
+                           System.out.println("fading out" + mp.getMedia().getSource().toString());
+                           Timeline timeline = new Timeline(
+                                   new KeyFrame(Duration.seconds(2),
+                                           new KeyValue(mp.volumeProperty(), 0.0)
+                                   )
+                           );
+                           timeline.setOnFinished(new EventHandler<ActionEvent>() {
+                               @Override
+                               public void handle(ActionEvent event) {
+                                   mp.stop();
+                               }
+                           });
+                           timeline.play();
+                       }
+                   }
+
+
+    private void setButtonTxt(String mode) {
+        String[] buttonText = new String[42];
+        noteNames_int_map = new HashMap<>();
+        if (mode.equals("notesDiatonic")) {
+            buttonText = new String[]{"C2", "D2", "E2", "F2", "G2", "A2", "B2", "C3", "D3", "E3", "C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4", "D4", "E4", "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6", "F6", "G6", "A6", "B6", "C7", "D7"};
+        } else if (mode.equals("notesChromatic")) {
+            buttonText = new String[]{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+        } else if (mode.equals("keyboard")) {
+            buttonText = new String[]{"Z", "X", "C", "V", "B", "N", "M", ",", ".", "Þ", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Æ", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+        }
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setText(buttonText[i+transposition]);
+        }
+    }
+
+
+    /**
+     * The mainStage field holds the primary stage of the UI, which is initialized in the start() method.
+     */
+    private static Stage mainStage;
+    /**
+     * The getMainStage() method returns the primary stage of the UI.
+     * @return the primary stage of the UI
+     */
+    public static Stage getMainStage() {
+        return mainStage;
+    }
+
+
+        public static void setFade(int keyIndex) {
+            Media media = mediasKeyMap.get(keyIndex);
+            for (MediaPlayer mediaPlayer : mediaPlayers) {
+                if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING && mediaPlayer.getMedia().equals(media)) {
+                    mediaPlayers.remove(mediaPlayer);
+                    Timeline timeline = new Timeline(
+                            new KeyFrame(Duration.seconds(releaseTime), new KeyValue(mediaPlayer.volumeProperty(), 0)));
+                    timeline.setOnFinished(event -> {
+                        mediaPlayer.stop();
+                        mediaPlayer.dispose();
+                    });
+                    timeline.play();
+                    return;
+                }
+            }
+        }
+        public static void setFade() {
+            for (MediaPlayer mediaPlayer : mediaPlayers) {
+                if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    mediaPlayers.remove(mediaPlayer);
+                    Timeline timeline = new Timeline(
+                            new KeyFrame(Duration.seconds(releaseTime), new KeyValue(mediaPlayer.volumeProperty(), 0)));
+                    timeline.setOnFinished(event -> {
+                        mediaPlayer.stop();
+                        mediaPlayer.dispose();
+                    });
+                    timeline.play();
+                    return;
+                }
+            }
+        }

@@ -1,0 +1,69 @@
+verður að vera búið til timeline þegar sampl er triggerað í fyrsta skipti
+
+en virkar að endurspila sama timeline í staðinn fyrir nýtt fyrir hvert repeat
+
+þá breytir noteLength slider ekki tempo eftir að nóta er triggeruð.
+
+veit ekki hvort er betra, fór til baka í nýtt timeline fyrir hvert repeat
+
+en hérna geymi ég hina hugmyndina ef skildi vilja nota:
+(það sem er kommentað út er líklega sniðugt en var ekki nauðsynlegt fyrir basic op)
+
+    private synchronized void replayMp(MediaPlayer mp, Timeline replaying) {
+        //replaying.stop();
+        //replaying.getKeyFrames().clear();
+
+        mp.seek(Duration.ZERO);
+        //mp.setVolume(masterVolume);
+        mp.play();
+
+        // addFadeOutKeyframes(replaying, mp); // in case master volume changes
+        replaying.playFromStart();
+    }
+
+    private void setOnFinishedFade(Timeline timeline, MediaPlayer mp) { // synchronized?
+        if (KeyListeners.isShiftDown() || KeyListeners.isCapsOn()) { // check if 'Loop' was on when note was triggered
+            // timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.setOnFinished(event -> {
+                if ((KeyListeners.isShiftDown() || KeyListeners.isCapsOn()) // check if 'Loop' is STILL on when fade out finishes
+                        && (!loopReleased.get())) {    // check is loop been released during the current fade out
+                    replayMp(mp, timeline); // replay mediaplayer from start and restart its fade out timeline
+                } else {
+                    mp.stop();
+                    timeline.stop();
+                }
+            });
+        }
+    }
+
+    private synchronized void fadeOut(MediaPlayer mp) { // boolean replaying? Timeline replaying
+        Timeline timeline = new Timeline(); // creates timeline for this specific mediaplayers volume fade out
+            addFadeOutKeyframes(timeline, mp);
+            setOnFinishedFade(timeline, mp);
+            timeline.play(); // play timeline if not already playing
+        }
+ }
+
+ // add fadeOutKeyframes er líklegast alveg eins
+
+     private void addFadeOutKeyframes(Timeline timeline, MediaPlayer mp) { // synchronized?
+         double initialVolume = mp.getVolume();
+         int numSteps = 100; // Number of steps for the fade-out
+         double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+         for (int i = 0; i < numSteps; i++) {
+             if (mp.getVolume() <= 0.0001) {
+                 break;
+             } // ensure that volume does not become negative
+             double volume = initialVolume * Math.pow(scaleFactor, i);
+             Duration time = Duration.millis(fadeOutLength * i / numSteps);
+             KeyFrame keyFrame = new KeyFrame(time, event -> {
+                 mp.setVolume(volume);
+                 if (!KeyListeners.isCapsOn() && !KeyListeners.isShiftDown()) { // checks if loop is released any time during the fade out
+                     loopReleased.set(true);
+                 }
+             });
+             timeline.getKeyFrames().add(keyFrame);
+         }
+         loopReleased.set(false);
+     }

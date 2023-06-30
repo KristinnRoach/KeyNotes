@@ -1,0 +1,28 @@
+Padar bara næs fyrir touchscreen
+er raunhæft að láta þetta virka fyrir síma / ipad?
+
+ef ekki þá væri sniðugra að nota GUI-ið öðruvísi
+
+nr 1 EINFALT og stílhreint
+
+Scene hugmyndir:
+
+Mode1:
+
+efstu þrír padddar skipta á milli effekta
+miðju þrír skiptá milli trommupakka
+neðstu þrír skiptá milli hljómahljóðfæra
+trommu keys takkar vinstra megin og hljóma hægra megin eða hægt að skipta hægri vinstri
+
+Mode2 til ?? :
+
+mismunandi hljómasamsetningar, hver pad einn hljómur.
+trommu keys vinstra megin og hljóma hægri // hægt að svissa
+
+Mode 3:
+mismunandi stemming á hverjum pad // of flókið fyrir þetta verkefni
+
+
+Mode 4:
+user sampleUtils - draga sömpl inn í padda
+

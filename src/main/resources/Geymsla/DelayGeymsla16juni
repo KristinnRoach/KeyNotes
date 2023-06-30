@@ -1,0 +1,64 @@
+    private void simpleDelay(Timeline delayTimeline, MediaPlayer mp) {
+        delayTimeline.setCycleCount(16);
+        AtomicInteger cycleCount = new AtomicInteger();
+        delayTimeline.setCycleCount(Timeline.INDEFINITE); // Timeline.INDEFINITE vs Animation.INDEFINITE á ekki að skipta máli
+        double initialVolume = mp.getVolume();
+        KeyFrame keyframe = new KeyFrame(Duration.millis(fadeOutLength / 2), event -> {
+
+            if (cycleCount.get() % 2 == 0) { // listener to toggle depending on the cycle count
+                mp.setRate(0.5);
+            }
+            if (cycleCount.get() % 3 == 0) {
+                mp.setRate(2.0);
+            } else {
+                mp.setRate(1.0);
+            }
+            System.out.println(delayTimeline.getCycleDuration() + " " + fadeOutLength);
+            delayTimeline.setAutoReverse(true);
+            if (mp.getVolume() <= 0.0001) { delayTimeline.stop(); }
+
+            delayTimeline.setRate(delayTimeline.getRate() * -1.0);
+            mp.setVolume(initialVolume); // add another gain stage
+
+            cycleCount.getAndIncrement();
+            System.out.println(cycleCount.get());
+
+        });
+        delayTimeline.getKeyFrames().add(16, keyframe);
+    }
+
+    private void delayOnFinished(Timeline timeline, MediaPlayer mp) {
+        // einfaldasta að gera bara cycle count indefinite en þarf að skilja nákv í hverju það felst (+autoReverse(tilSkiptis))
+        // og hvað / hvort þarf að tweaka
+        // annars eins og er hér fyrir neðan að nota sama method og loop / spurning hvernig á að höndla þegar bæði er í gangi
+        // væri hægt að búa til copy af mp og tímalínu (td bara þegar bæði delay og loop er í gangi)
+        // mögulega er skemmtilegasta lausnin samt bara random ruglið sem kemur með sem minnstum kóða eins og cycle count indefinite
+
+        timeline.setOnFinished(event -> { // overrides the other setOnFinished
+            if(isDelayOn.get()) {
+                //timeline.getKeyFrames().clear();
+                timeline.getKeyFrames().setAll(getDelayKeyframes(timeline));
+                timeline.setRate(4.0);
+                replayMediaPlayer(mp, masterVolume / 2);
+                timeline.playFromStart();
+                //replayFadeOut(timeline, mp);
+            }
+            // mp.setRate(mp.getRate() + 0.5);
+        });
+    }
+    // private final Timeline delayTimeline = new Timeline(); // ef vil bara eina timeline
+
+    private KeyFrame[] getDelayKeyframes(Timeline timeline) {
+        double durationFactor = 0.25; // 1/4 duration
+        KeyFrame[] delayKeyframes = new KeyFrame[timeline.getKeyFrames().size()];
+
+        int index = 0;
+        for (KeyFrame keyFrame : timeline.getKeyFrames()) {
+            Duration originalTime = keyFrame.getTime();
+            Duration adjustedTime = originalTime.multiply(durationFactor);
+            keyFrame = new KeyFrame(adjustedTime, keyFrame.getOnFinished(), keyFrame.getValues().toArray(new KeyValue[0]));
+            timeline.getKeyFrames().add(keyFrame);
+            delayKeyframes[index++] = keyFrame;
+        }
+        return delayKeyframes;
+    }

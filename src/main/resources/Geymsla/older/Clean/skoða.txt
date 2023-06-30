@@ -1,0 +1,9 @@
+
+
+Optional<> interface-ið - hægt að gera orElse(default value) ofl sniðugt, isPresent() td
+
+List-ar geta gert indexOf()
+
+nota reglulegar segðir til að lágmarka kóða
+
+

@@ -1,0 +1,11 @@
+
+klára að renna í gegnum kóðann og debugga með gbt
+
+Process finished with exit code 137 (interrupted by signal 9: SIGKILL)
+
+
+skoða með gbt: (líklega ómerkilegt)
+Since the SamplePack class is responsible for importing and storing the samples, you could consider moving the sorting of files and the creation of Media objects to a separate method within the class.
+This way, the importFolder method would have a single responsibility of importing the samples.
+Instead of using an array of Sample objects, you could utilize a List<Sample> in the SamplePack class.
+This would allow for more flexibility in managing the samples and avoid fixed-size array limitations.

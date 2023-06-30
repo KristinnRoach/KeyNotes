@@ -1,0 +1,87 @@
+.oct1 {
+    -fx-background-color: #B2ABBF;
+}
+
+.oct2 {
+    -fx-background-color: #AEB3C9;
+}
+
+.oct3 {
+    -fx-background-color: #BFD5E2;
+}
+
+.oct4 {
+    -fx-background-color: #C7EBF0;
+}
+
+.button:hover {
+    -fx-background-color: #F0F0F0;
+}
+
+.buttonPressed {
+    -fx-background-color: #F0F0F0;
+}
+
+.toolButton {
+    -fx-background-color: #B2ABBF;
+}
+
+.toolButtonPressed {
+    -fx-background-color: #F0F0F0;
+}
+
+#fxBorderPane {
+    -fx-padding: 10, 10, 10, 10;
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+}
+
+#topBar {
+    -fx-background-color: linear-gradient(to right, #B2ABBF, #C7EBF0);
+}
+
+#fxQuit, #fxMinimize {
+    -fx-background-color: #B2ABBF;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+#fxQuit:hover, #fxMinimize:hover {
+    -fx-font-size: 14px;
+    -fx-background-color: #F0F0F0;
+    -fx-effect: dropshadow(three-pass-box, #F0F0F0, 10, 0, 0, 0);
+}
+
+#fxShowNotes, #fxTransUp, #fxTransDown, #fxTransReset, #fxMinorMajor {
+    -fx-background-color: #BFD5E2;
+}
+
+#fxRootNote {
+    -fx-text-fill: #F0F0F0;
+}
+
+#fxVolSlide, #fxReleaseSlide {
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.slider .track {
+    -fx-background-color: linear-gradient(to left, #B2ABBF, #C7EBF0);
+}
+.slider .thumb:pressed {
+    -fx-background-color: #B2ABBF;
+}
+.slider .thumb {
+    -fx-background-color: #C7EBF0;
+    -fx-border-color: #B2ABBF;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+.slider {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.7), 10, 0, 0, 0);
+}
+/*
+.metronome {
+     -fx-image: 'src/main/resources/padman/vidmot/Images/metronome.png';
+}
+*/

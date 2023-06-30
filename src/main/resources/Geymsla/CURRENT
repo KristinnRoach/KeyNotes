@@ -1,0 +1,48 @@
+TRANSPOSITION = þarf að laga -> vitlausar efstu nóturnar þegar transpósað lengst upp
+
+Reduce sample size - mp3 komið. Halda áfram, fylgjast með hvort hafi áhrif á virkni
+
+onMouseClick - tækifæri til að nýta í eitthvað?
+
+DETECT CAPS LOCK ON AT START
+
+TOGGLE BUTTON - SYNC / FREE
+
+TEMPO - meikar það sens ef notelength breytist með...? Hafa sem minnsta valmöguleika.
+stendur bara 120 í byrjun og mar getur dregið það upp og niður til að breyta (command eða eikkað til að draga hægar?)
+Hægt að tvíklikka til að resetta.
+
+Ákveða hvað ég nota örvatakka í default. (gæti breyst með keycombo eða selected button bara ef það flækir ekki neitt)
+
+SUSTAIN:
+finna út úr choke logic
+
+
+TIMING:
+er frekar næs að það sé ekki fullkomið en væri samt næs að geta syncað.
+Td. ef hægt er að finna solid leið til að klukka sem retriggerar þá ófullkomnu loopuna áður en
+hún fer of langt útaf brautinni. Byrja á að sjá hvort hægt sé að fá solid timing á metronome.
+Annars er þetta ekki möst fyrir þessa útgáfu af appinu - kannski bíða með þangað til fer í
+vst eða sampler pælingar meðetta.
+
+Það er hægt að nota setDelay() á timeline. Það getur virkað eins og sustain til dæmis.
+
+keyframes do not need to be added sequentially relative to time !! (samkvæmt gbt)
+
+new KeyFrame(Duration // duration segir til um hversu langt síðan timeline byrjaði, regardless of cycles
+
+
+GUI:
+reflect key positions
+
+Metronome
+RELIABLE SPECIFIC TIME INTERVAL ?!
+
+Delay
+
+
+
+
+
+
+the code below is from the Controller class for the GUI in my JavaFx program. I want to simplify the code and the logic to make it easy to understand, while ensuring reliable and good performance. To do this I want to refactor the code in a straight forward, logical way. Show me and example of how to simplify the controller class by creating one or more helper classes. You can choose whether to make a helper class, utility class or an enum, depending on which is more simple to use while ensuring good performance.

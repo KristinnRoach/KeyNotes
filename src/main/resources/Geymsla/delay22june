@@ -1,0 +1,43 @@
+    private static void addDelayKeyFrames(Timeline delayTimeline, SamplePlayer player) {
+        double initialVolume = player.getVolume();
+        int numSteps = 100; // Number of steps for the fade-out
+        double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+        KeyFrame[] keyFrames = new KeyFrame[numSteps];
+        for (int i = 0; i < numSteps; i++) {
+            // if (player.getVolume() <= 0.0001) { break; }  // ensure that volume does not become negative // might make it unstable rythmically, REMOVE?
+            double volume = initialVolume * Math.pow(scaleFactor, i);
+            Duration time = Duration.millis(fadeOutLength * i / numSteps);
+            KeyFrame keyFrame = new KeyFrame(time, event -> {
+                player.setVolume(volume);
+            });
+            keyFrames[i] = keyFrame;
+        }
+        delayTimeline.getKeyFrames().setAll(keyFrames);
+    }
+
+    private static void setupDelayTimeline(SamplePlayer player) {
+        Timeline delayTimeline = new Timeline();
+        //delayTimeline.setDelay(Duration.millis(fadeOutLength));
+        //addFadeKeyFrames(delayTimeline, player);
+        addDelayKeyFrames(delayTimeline, player);
+        // simpleDelay(delayTimeline, player);
+        // setOnFinishedDelay(delayTimeline, player);
+        // delayTimeline.setCycleCount(Timeline.INDEFINITE);
+        delayTimeline.setOnFinished(event -> {
+            if(isDelayOn) {
+                //replaySamplePlayer(player, masterVolume);
+                delayTimeline.stop();  // ef ég vil að rythminn breytist ekki með slider þá bara playFromStart!
+                delayTimeline.getKeyFrames().clear();
+                addDelayKeyFrames(delayTimeline, player);
+                delayTimeline.playFromStart();
+            } else {
+                delayTimeline.stop();
+                player.stop();
+                // remove from sets if there are any
+                System.out.println("delay finished");
+            }
+        });
+        delayTimeline.play();
+    }
+

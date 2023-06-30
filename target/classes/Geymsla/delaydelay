@@ -1,0 +1,18 @@
+Skoða comments inní delay method.
+
+Prófa að fara til baka í nýtt timeline fyrir hvert repeat til að einfalda delay.
+
+Eða að þegar delay er on þá byrjar nýtt timeline f hvert repeat.
+
+láta sem minnstan kóða gera sem mest, forritið snýst ekki um effekta.
+
+Virkar að hafa eina timeline fyrir hvern mediaplayer.
+
+    inni í replay():
+        Replayin timeline stoppar, bætir við keyframes aftur og playFromStart().
+
+LAGA Loop Reset! Komið alveg?
+
+Pæling: gera listeners og conditions inni í keyframes til að geta breytt þeim án þess að búa þá til aftur.
+
+

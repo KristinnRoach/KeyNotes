@@ -1,0 +1,236 @@
+SampleHolder aðferðir
+
+    public static void setSample(File keySample, int key) {
+        if (!keySample.isFile() || !(keySample.getName().endsWith(".wav") || keySample.getName().endsWith(".mp3"))) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Illegal Argument Exception");
+            alert.setContentText("Sample needs to be wav or mp3");
+            alert.showAndWait();
+            throw new IllegalArgumentException("Sample needs to be wav or mp3");
+        }
+        Media media = new Media(keySample.toURI().toString());
+        mediasKeyMap.put(key, media);
+    }
+
+    public static void setSampleFromFile(File keySample, int key) {
+        setSample(keySample, key);
+    }
+
+    public static void handleDragDropped(DragEvent e, int key) {
+        File file = e.getDragboard().getFiles().iterator().next();
+        setSample(file, key);
+        e.setDropCompleted(true);
+        e.consume();
+    }
+
+
+
+
+    KeysUI aðferðir:
+
+        @FXML
+        private void onDragOver(DragEvent e) {
+            if (e.getDragboard().hasFiles()) {
+                e.acceptTransferModes(TransferMode.ANY);
+            }
+        }
+
+        @FXML
+        private void onDragDropped(DragEvent e) throws FileNotFoundException {
+            Button targetButton = (Button) e.getGestureTarget();
+            int key = Arrays.asList(buttons).indexOf(targetButton);
+            SampleHolder.handleDragDropped(e, key);
+        }
+
+
+        switch (e.getCode()) {
+            case DIGIT1:
+                keyIndex = 36;
+                break;
+            case DIGIT2:
+                keyIndex = 38;
+                break;
+            case DIGIT3:
+                keyIndex = 40;
+                break;
+            case DIGIT4:
+                keyIndex = 41;
+                break;
+            case DIGIT5:
+                keyIndex = 43;
+                break;
+            case DIGIT6:
+                keyIndex = 45;
+                break;
+            case DIGIT7:
+                keyIndex = 47;
+                break;
+            case DIGIT8:
+                keyIndex = 48;
+                break;
+            case DIGIT9:
+                keyIndex = 50;
+                break;
+            case DIGIT0:
+                keyIndex = 52;
+                break;
+            case Q:
+                keyIndex = 24;
+                break;
+            case W:
+                keyIndex = 26;
+                break;
+            case E:
+                keyIndex = 28;
+                break;
+            case R:
+                keyIndex = 29;
+                break;
+            case T:
+                keyIndex = 31;
+                break;
+            case Y:
+                keyIndex = 33;
+                break;
+            case U:
+                keyIndex = 35;
+                break;
+            case I:
+                keyIndex = 36;
+                break;
+            case O:
+                keyIndex = 38;
+                break;
+            case P:
+                keyIndex = 40;
+                break;
+            case A:
+                keyIndex = 12;
+                break;
+            case S:
+                keyIndex = 14;
+                break;
+            case D:
+                keyIndex = 16;
+                break;
+            case F:
+                keyIndex = 17;
+                break;
+            case G:
+                keyIndex = 19;
+                break;
+            case H:
+                keyIndex = 21;
+                break;
+            case J:
+                keyIndex = 23;
+                break;
+            case K:
+                keyIndex = 24;
+                break;
+            case L:
+                keyIndex = 26;
+                break;
+            case SEMICOLON:
+                keyIndex = 28;
+                break;
+            case Z:
+                keyIndex = 0;
+                break;
+            case X:
+                keyIndex = 2;
+                break;
+            case C:
+                keyIndex = 4;
+                break;
+            case V:
+                keyIndex = 5;
+                break;
+            case B:
+                keyIndex = 7;
+                break;
+            case N:
+                keyIndex = 9;
+                break;
+            case M:
+                keyIndex = 11;
+                break;
+            case COMMA:
+                keyIndex = 12;
+                break;
+            case PERIOD:
+                keyIndex = 14;
+                break;
+            case SLASH:
+                keyIndex = 16;
+                break;
+
+
+    @FXML
+    private void mousePressedSample(MouseEvent e) {
+        int keyIndex = -1;
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource().equals(buttons[i])) {
+
+                SampleHolder.playMedia(i);
+                break;
+            }
+        }
+        for (int i = 10; i < 20; i++) {
+            if (e.getSource().equals(buttons[i])) {
+                SampleHolder.playMedia(i-3);
+                break;
+            }
+        }
+        for (int i = 20; i < 30; i++) {
+            if (e.getSource().equals(buttons[i])) {
+                SampleHolder.playMedia(i-6);
+                break;
+            }
+        }
+        for (int i = 30; i < 40; i++) {
+            if (e.getSource().equals(buttons[i])) {
+                SampleHolder.playMedia(i-9);
+                break;
+            }
+        }
+    }
+
+        /**
+         Checks if there is a MediaPlayer playing the given Media that can be reused.
+         @param media the Media to check
+         @return a MediaPlayer that can be reused, or null if none is found
+         */
+        private static synchronized MediaPlayer mediaplayerIsReusable(Media media) {
+            for (MediaPlayer mediaPlayer : mediaPlayers) {
+                if (mediaPlayer != null && mediaPlayer.getMedia().equals(media) && !(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)) {
+                    return mediaPlayer;
+                }
+            } return null;
+        }
+            public static synchronized void playMedia(int key) {
+                Media media = mediasKeyMap.get(key);
+                MediaPlayer longestPlaying = mediaPlayers.poll();
+                MediaPlayer reusable = mediaplayerIsReusable(media);
+                if (reusable != null){
+                    setupMediaPlayer(reusable);
+                    reusable.play();
+                } else if (mediaPlayers.size() < N) {
+                    MediaPlayer newMp = new MediaPlayer(media);
+                    setupMediaPlayer(newMp);
+                    newMp.play();
+
+
+        private static synchronized void setupMediaPlayer(MediaPlayer mediaPlayer) {
+            mediaPlayers.offer(mediaPlayer);
+            mediaPlayer.setVolume(mainVolume);
+        /*    mediaPlayer.setOnEndOfMedia(() -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.dispose();
+                    mediaPlayers.remove(mediaPlayer);
+                }
+            }); */
+        }
+

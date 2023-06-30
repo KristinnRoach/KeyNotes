@@ -1,0 +1,118 @@
+Virkaði ekki almennilega
+
+KeysUI:
+
+    private Slider fxVolSlide, fxReleaseSlide;
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        addReleaseTimeSlider(fxReleaseSlide);
+
+    /**
+     Sets up a Release time slider to control the release time of all media-players
+     */
+
+    public void addReleaseTimeSlider(Slider fxReleaseSlide) {
+        fxReleaseSlide.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double releaseTime = newValue.doubleValue() / 100.0;
+            sampleUtils.setReleaseTime(releaseTime);
+        });
+    }
+
+    Samples:
+
+    public SimpleDoubleProperty masterVolumeProperty = new SimpleDoubleProperty(masterVolume);
+
+
+    public synchronized void releaseNote(int noteNumber) {
+        if (mediasKeyMap.containsKey(noteNumber)) {
+            Media sample = mediasKeyMap.get(noteNumber);
+            MediaPlayer playingReleasedNote = mediaPlayers.get(sample);
+            if (playingReleasedNote != null && playingReleasedNote.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayers.remove(sample);
+                fadeOut(playingReleasedNote, fadeTimeline);
+                // playingReleasedNote.stop();  // just testing
+                // playingReleasedNote.dispose(); // just testing
+            }
+        }
+    }
+
+    private void fadeOut(MediaPlayer mp, Timeline fadeTimeline){
+
+            fadeTimeline.setOnFinished(event -> {
+                if (mp != null) {
+                    mp.stop();
+                    mp.dispose();
+                }
+            });
+            fadeTimeline.play();
+        }
+
+        // Could be in a helper / utility class?
+    private Timeline fadeTimeline;
+
+    setFadeOutTimeline(); // where does it make sense to call this method
+
+    public void setFadeOutTimeline() {
+        this.fadeTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(releaseTime), new KeyValue(masterVolumeProperty, 0)));
+    }
+
+    public void setReleaseTime(double releaseTime){ // for adding a release time slider in GUI
+        this.releaseTime = releaseTime;
+        resetFadeTimeline();
+    }
+    private void resetFadeTimeline() {
+        this.fadeTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(releaseTime), new KeyValue(masterVolumeProperty, 0)));
+    }
+
+}
+
+
+
+
+    FXML:
+
+                   </Label>
+                        <Slider fx:id="fxReleaseSlide" blockIncrement="1.0" maxHeight="20.0" maxWidth="100.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="16.0" prefWidth="100.0" value="100.0">
+                            <opaqueInsets>
+                                <Insets left="5.0" />
+                            </opaqueInsets>
+                            <HBox.margin>
+                                <Insets left="5.0" top="2.0" />
+                            </HBox.margin>
+                        </Slider>
+                   <Label layoutX="62.0" layoutY="10.0" prefHeight="23.0" prefWidth="34.0" text="Volume">
+                      <font>
+                         <Font size="10.0" />
+                      </font>
+                      <HBox.margin>
+                         <Insets left="10.0" />
+                      </HBox.margin>
+                   </Label>
+                        <Slider fx:id="fxVolSlide" blockIncrement="1.0" maxHeight="20.0" maxWidth="100.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="16.0" prefWidth="100.0" value="100.0">
+                            <opaqueInsets>
+                                <Insets left="5.0" />
+                            </opaqueInsets>
+                            <HBox.margin>
+                                <Insets left="5.0" top="2.0" />
+                            </HBox.margin>
+                        </Slider>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets />
+                    </BorderPane.margin>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                    </VBox.margin>
+                </HBox>
+            </VBox>
+        </top>
+
+
+
+
+

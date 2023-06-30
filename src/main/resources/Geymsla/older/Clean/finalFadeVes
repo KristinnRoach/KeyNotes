@@ -1,0 +1,160 @@
+    public synchronized void playMedia(int noteNumber, int nrOfKeysPressed) {
+        Sample sample = samplePack.samples[noteNumber];
+        // MediaPlayer oldMp = MPs.get(sample);
+        if (nrOfKeysPressed <= keyboardRollOver && MPs.size() < N) {
+            MediaPlayer newMediaPlayer = new MediaPlayer(sample.media);
+            setupMediaPlayer(sample.media, newMediaPlayer);
+            newMediaPlayer.play();
+
+            if (!Controller.isShiftDown()) {
+                fadeOut(newMediaPlayer);
+            } else {
+                repeatingFadeOut(newMediaPlayer);
+            }
+        }
+    }
+
+    private synchronized void fadeOut(MediaPlayer mp) {
+        if (mp != null) {
+
+            double fadeDuration = fadeOutLength; // Duration of the fade in seconds
+            int numSteps = 100; // Number of steps for the fade
+
+            double initialVolume = mp.getVolume();
+            double scaleFactor = Math.pow(0.010 / initialVolume, 1.5 / numSteps); // Exponential scale factor
+
+            Timeline timeline = new Timeline();
+
+            for (int i = 0; i < numSteps; i++) {
+                final double volume = initialVolume * Math.pow(scaleFactor, i);
+                final Duration time = Duration.millis(fadeDuration * (i + 10) / numSteps);
+
+                KeyFrame keyFrame = new KeyFrame(time, event -> {
+                    mp.setVolume(volume);
+                });
+                timeline.getKeyFrames().add(keyFrame);
+            }
+
+            timeline.setOnFinished(event -> {
+                onFadeFinished(mp);
+            });
+            timeline.play();
+        }
+    }
+
+    private synchronized void repeatingFadeOut(MediaPlayer mp) {
+        if (mp != null) {
+            double fadeDuration = fadeOutLength; // Duration of the fade in seconds
+            int numSteps = 100; // Number of steps for the fade
+
+            double initialVolume = mp.getVolume();
+            double scaleFactor = Math.pow(0.010 / initialVolume, 1.5 / numSteps); // Exponential scale factor
+
+            Timeline timeline = new Timeline();
+
+            for (int i = 0; i < numSteps; i++) {
+                final double volume = initialVolume * Math.pow(scaleFactor, i);
+                final Duration time = Duration.millis(fadeDuration * (i + 10) / numSteps);
+
+                KeyFrame keyFrame = new KeyFrame(time, event -> {
+                    mp.setVolume(volume);
+                });
+                timeline.getKeyFrames().add(keyFrame);
+            }
+
+            timeline.setOnFinished(event -> {
+                if (Controller.isShiftDown()) {
+                    replay(mp);
+                } else {
+                    mp.stop();
+                }
+            });
+
+            timeline.play();
+        }
+    }
+
+    private void onFadeFinished(MediaPlayer mp) {
+        if (Controller.isShiftDown()) {
+            replay(mp);
+        } else {
+            mp.stop();
+        }
+    }
+
+
+    public void replay(MediaPlayer mp) {
+        if (Controller.isShiftDown()) {
+            mp.seek(Duration.ZERO);
+            mp.setVolume(masterVolume);
+            mp.play();
+            repeatingFadeOut(mp);
+        } else {
+            fadeOut(mp);
+        }
+    }
+
+
+            Timeline isAlreadyLooping = loopingMap.get(mp);
+            if (isAlreadyLooping != null) { // if (loopingMap.containsKey(mp)) {
+                isAlreadyLooping.setOnFinished(event -> { mp.stop(); });
+            }
+
+
+                    mp.volumeProperty().addListener((obs, oldValue, newValue) -> {
+                        if (newValue.doubleValue() <= 0.1) {
+                            if(Controller.isCapsOn()) {
+                                replayMp(mp);
+                            } else {
+                                mp.stop();
+                            }
+                        }
+                    });
+    /*
+        private void addFadeKeyFrames(MediaPlayer mp, Timeline tm) {
+
+            int numSteps = 100; // Number of steps for the fade
+            double initialVolume = mp.getVolume();
+            double scaleFactor = Math.pow(0.01 / initialVolume, 1.5 / numSteps); // Exponential scale factor
+
+            Duration time = null;
+            int step = 0;
+            while (step < numSteps) { // currentVolume > 0.0 &&
+                final double volume = initialVolume * Math.pow(scaleFactor, step); // needs to be final for lambda
+                final Duration timeLambda = Duration.millis(fadeOutLength * (step + 10) / numSteps);
+
+                KeyFrame keyFrame = new KeyFrame(timeLambda, event -> {
+                    mp.setVolume(volume);
+                });
+                tm.getKeyFrames().add(keyFrame);
+                step++;
+
+                time = timeLambda; // to use in the next keyframe
+            }
+            if (Controller.isCapsOn()) {
+                KeyFrame replayKeyFrame = new KeyFrame(time, event -> {
+                    replayMp(mp);
+                    fadeOut(mp);
+                });
+                loopingTimeline.getKeyFrames().add(replayKeyFrame);
+            } else {
+                KeyFrame stopKeyFrame = new KeyFrame(time, event -> mp.stop());
+                tm.getKeyFrames().add(stopKeyFrame);
+            }
+            tm.playFromStart();
+        } */
+
+
+    /*    private void setUpFadeOutTimeline(MediaPlayer mp, Timeline timeline) {
+            fadeOutTimeline.setOnFinished(event -> {
+                if (Controller.isCapsOn()) {
+                    // newLoop.getKeyFrames().addAll(fadeOutTimeline.getKeyFrames());
+                    // loopingMap.put(mp, newLoop);
+                    // setUpFadeOutTimeline(mp);
+                    replay(mp);
+                } else {
+                    mp.stop();
+                    // fadeOutTimeline.stop();
+                }});
+            } */
+    // Timeline tm = (Controller.isCapsOn()) ? loopingTimeline : fadeOutTimeline;

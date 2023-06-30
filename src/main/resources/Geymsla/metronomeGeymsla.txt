@@ -1,0 +1,62 @@
+
+    private Timeline metronomeTimeline = new Timeline();
+
+
+    public void createMetronome() {
+        String path = "src/main/resources/keynotes/vidmot/Audio/metronome_100ms_C.wav";
+        // String path = "src/main/resources/keynotes/vidmot/Audio/PianoC2-C7/sPno_C4_0.wav"; // test
+
+        metronome = createMediaPlayer(path);
+        metronome.setVolume(masterVolume / 4); // metronome volume?
+        metronomeTimeline.setCycleCount(Timeline.INDEFINITE);
+
+/*
+        metronome.setOnEndOfMedia(() -> {
+            metronome.stop();
+            metronome.seek(Duration.ZERO);
+            double pauseLength = (fadeOutLengthProperty.get() - metronome.getCycleDuration().toMillis());
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(fadeOutLengthProperty.get()), event -> metronome.play());
+            Timeline delayTimeline = new Timeline(keyFrame);
+            delayTimeline.play();
+        }); */
+
+        metronome.play();
+       // metronomeTimeline = new Timeline();
+    }
+
+
+    public void playMetronome() {
+        createMetronome();
+       // metronome.setVolume(masterVolume / 4);
+        /*
+
+        KeyFrame keyFrame = createKeyFrame();
+
+        fadeOutLengthProperty.addListener((obs, oldValue, newValue) -> {
+            metronomeTimeline.getKeyFrames().add(0, createKeyFrame());
+        });
+
+        metronomeTimeline.getKeyFrames().add(keyFrame);
+
+        metronomeTimeline.setCycleCount(Animation.INDEFINITE);
+        metronomeTimeline.play(); */
+      //  metronome.play();
+    }
+
+    private KeyFrame createKeyFrame() {
+        return new KeyFrame(Duration.millis(1000), event -> {
+          //  PauseTransition delay = new PauseTransition(Duration.millis(10000));
+          //  delay.setOnFinished(e -> {
+                //metronome.stop();
+                metronome.seek(Duration.ZERO);
+                metronome.play();
+          //  });
+          //  delay.play();
+        });
+    }
+
+
+    public void stopMetronome() {
+        metronomeTimeline.stop(); // if i want it to retrigger
+       // metronome.setVolume(0.0);
+    }

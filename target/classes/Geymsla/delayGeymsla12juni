@@ -1,0 +1,100 @@
+    public void createMetronome() {
+        String path = "src/main/resources/keynotes/vidmot/Audio/metronome_super_quick.wav";
+        //String path = "src/main/resources/keynotes/vidmot/Audio/PianoC2-C7/sPno_C4_0.wav"; // test
+
+        metronome = createMediaPlayer(path);
+        metronome.setVolume(masterVolume); // metronome volume?
+        metronomeTimeline = new Timeline();
+
+  /*      metronomeTimeline = new Timeline(new KeyFrame(Duration.millis(fadeOutLength), event -> {
+            //metronome.stop();
+
+            // ADD LISTENER TO FOLLOW LENGTH SLIDER
+
+            metronome.seek(Duration.ZERO);
+            metronome.play();
+            metronomeTimeline.playFromStart();
+        }));
+
+        // Add a ChangeListener to fadeOutLength property
+        ChangeListener<Number> fadeOutLengthListener = (obs, oldValue, newValue) -> {
+            keyFrame.setTime(Duration.millis(newValue.doubleValue()));
+        };
+       // metronomeTimeline.setCycleCount(Animation.INDEFINITE);
+*/
+
+
+  //  private KeyFrame[] getDelayKeyFrames() {
+  //      return keyframes;}
+/*
+    public void setNoteLength(double length) { // má vera public?
+        // this.fadeOutLength = length;
+        this.timeDivision = length / 4;
+        //playMetronome();
+    }
+
+    private List<Timeline> delayTimelines = new ArrayList<>();
+
+
+    private synchronized void sendMpToEffects(MediaPlayer mp) {
+        Media media = mp.getMedia();
+        MediaPlayer mpCopy = new MediaPlayer(media);
+        // mpCopy.setStartTime(mp.getCurrentTime());
+        setupMediaPlayer(media, mpCopy);
+        handleDelayEffect(mpCopy);
+    }
+
+    public synchronized void handleDelayEffect(MediaPlayer mp) { // synchronized?
+        double initialCycleDuration = timeDivision;
+        Timeline delayTimeline = new Timeline();
+        delayTimelines.add(delayTimeline);
+        System.out.println("Delay Timelines: " + delayTimelines.size());
+        delayTimeline.getKeyFrames().addAll(createDelayKeyframes(mp));
+        delayTimeline.setCycleCount(8);
+        delayTimeline.setOnFinished(event -> {
+            delayTimeline.stop();
+            mp.stop();
+            delayTimelines.remove(delayTimeline);
+            System.out.println("delay stoppedOnFinished");
+            System.out.println(delayTimeline.getCycleDuration().toMillis());
+            timeDivision = initialCycleDuration;
+            });
+        delayTimeline.playFromStart();
+    }
+
+    private KeyFrame[] createDelayKeyframes(MediaPlayer mp) { // væri hægt að hafa bara eina delay timeline og nota // for (MediaPlayer mp : MPs.values())
+        KeyFrame startKeyFrame = new KeyFrame(Duration.ZERO, event -> {
+            mp.seek(Duration.ZERO);
+            mp.balanceProperty().set((mp.getBalance() - 0.5) % 1);
+            mp.setRate(2); // hægt að nota getCurrentRate() ef þarf nákvæmara
+            mp.setVolume(mp.getVolume()*0.6);
+            mp.play();
+        });
+        KeyFrame endKeyFrame = new KeyFrame(Duration.millis(timeDivision), event -> {
+            //timeDivision = timeDivision / 1.25;
+            // does nothing but sets the duration of the cycle
+        });
+        KeyFrame[] delayKeyFrames = new KeyFrame[2];
+        delayKeyFrames[0] = startKeyFrame;
+        delayKeyFrames[delayKeyFrames.length - 1] = endKeyFrame;
+        return delayKeyFrames;
+    }
+
+    private KeyFrame[] fadeFrames(MediaPlayer mp) {
+        int numSteps = 14;
+        double initialVolume = mp.getVolume();
+        double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+
+        KeyFrame[] fadeFrames = new KeyFrame[numSteps + 2];
+        for (int i = 0; i < numSteps; i++) {
+            if (mp.getVolume() <= 0.0001) { break;}  // ensure that volume does not become negative
+            double volume = initialVolume * Math.pow(scaleFactor, i);
+            Duration time = Duration.millis(timeDivision * i / numSteps);
+            fadeFrames[i+1] = new KeyFrame(time, event -> {
+                mp.setVolume(volume);
+            });
+        }
+        return fadeFrames;
+    }
+*/

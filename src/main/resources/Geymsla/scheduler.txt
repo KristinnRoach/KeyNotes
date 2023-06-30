@@ -1,0 +1,7 @@
+                Runnable loop = () -> {
+                    System.out.println("Task 1 executed at: " + System.currentTimeMillis());
+                    replaySamplePlayer(player, masterVolume);
+                    replayFadeOut(timeline, player);
+                };
+                ScheduledExecutorService scheduler1 = Executors.newScheduledThreadPool(1);
+                scheduler1.scheduleAtFixedRate(loop, 0, (long) fadeOutLength, TimeUnit.MILLISECONDS);

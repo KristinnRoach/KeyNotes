@@ -1,0 +1,12 @@
+
+NoteLength Slider:
+
+Hafa stepped values svo að allir breytist á sama tíma til að halda rythma meira predictable
+
+Hafa values tíma í millisek sem er auðvelt að reikna, skipt í fjórða-, áttunduparta etc
+
+Hægt að kveikja á metronome sem er einn takki (hægt að draga sampl inní hann (normalise volume þá))
+
+
+
+I  have a few ideas releated to the fadeOutLength. The fadeOutLength is effectively also the loop length because when the mediaplayers are replaying their samples continuously, it is according to the fadeOutLength. Can we add a simple metronome method that splits

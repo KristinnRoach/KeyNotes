@@ -1,0 +1,179 @@
+    private void fadeOut(MediaPlayer mp) {
+        if (mp != null) {
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.millis(notesLength), new KeyValue(mp.volumeProperty(), 0)));
+            timeline.setOnFinished(event -> {
+                mp.stop();
+                mp.dispose();
+            });
+            timeline.play();
+        }
+    }
+
+
+
+    /*    public synchronized void releaseNote(int noteNumber) {
+            if (mediasKeyMap.containsKey(noteNumber)) {
+                Media sample = mediasKeyMap.get(noteNumber);
+                MediaPlayer playingReleasedNote = mediaPlayers.get(sample);
+                if (playingReleasedNote != null && playingReleasedNote.getStatus() == MediaPlayer.Status.PLAYING) {
+                    mediaPlayers.remove(sample);
+                    fadeOut(playingReleasedNote);
+                    // playingReleasedNote.stop();  // just testing
+                    // playingReleasedNote.dispose(); // just testing
+                }
+            }
+        } */
+
+
+
+    private synchronized void fadeOut(MediaPlayer mp, boolean shiftDownAtStartOfNote) {
+        if (mp != null) {
+
+            double fadeDuration = fadeOutLength; // Duration of the fade in seconds
+            int numSteps = 100; // Number of steps for the fade
+
+            double initialVolume = mp.getVolume();
+            double scaleFactor = Math.pow(0.010 / initialVolume, 1.5 / numSteps); // Exponential scale factor
+
+            Timeline timeline = new Timeline();
+
+            for (int i = 0; i < numSteps; i++) {
+                final double volume = initialVolume * Math.pow(scaleFactor, i);
+                final Duration time = Duration.millis(fadeDuration * (i + 10) / numSteps);
+
+                KeyFrame keyFrame = new KeyFrame(time, event -> { mp.setVolume(volume);});
+                timeline.getKeyFrames().add(keyFrame);
+            }
+
+            timeline.setOnFinished(event -> { onFadeFinished(mp, shiftDownAtStartOfNote);});
+            timeline.play();
+        }
+    }
+
+    private synchronized void onFadeFinished(MediaPlayer mp, boolean shiftDown) {
+        if (!shiftDown) { mp.stop(); }
+        else { // if shift or hold is active then play again from beginning
+            mp.seek(Duration.ZERO);
+            mp.setVolume(masterVolume);
+            mp.play();
+            fadeOut(mp, Controller.isShiftDown());
+        }
+    }
+
+
+    private synchronized void fadeOut(MediaPlayer mp, boolean shiftDownAtStartOfNote) {
+            if (mp != null) {
+                double fadeDuration = fadeOutLength;
+                int numSteps = 100;
+                double initialVolume = mp.getVolume();
+                double scaleFactor = Math.exp(Math.log(0.010 / initialVolume) / numSteps);
+
+                FadeTransition fadeTransition = new FadeTransition(Duration.seconds(fadeDuration), mp.getNode);
+                fadeTransition.setFromValue(initialVolume);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.setInterpolator(Interpolator.LINEAR);
+
+                fadeTransition.setOnFinished(event -> onFadeFinished(mp, shiftDownAtStartOfNote));
+
+                fadeTransition.play();
+            }
+        }
+
+        private synchronized void onFadeFinished(MediaPlayer mp, boolean shiftDown) {
+            if (!shiftDown) {
+                mp.stop();
+            } else {
+                mp.seek(Duration.ZERO);
+                mp.setVolume(masterVolume);
+                mp.play();
+                fadeOut(mp, Controller.isShiftDown());
+            }
+        }
+
+                   /* final Duration zeroTime = Duration.millis(fadeDuration + 10);
+                    KeyFrame zeroKeyFrame = new KeyFrame(zeroTime, event -> { replay(mp); } );
+                    timeline.getKeyFrames().add(zeroKeyFrame); */
+                    // timeline.setCycleCount(Animation.INDEFINITE);
+
+                 /*   Controller.addShiftReleaseListener(() -> {
+                        System.out.println("shiftReleaseListened");
+                        fadeOut(mp);
+                        timeline.stop();
+                    }); */
+
+
+
+     private synchronized void repeatingFadeOut(MediaPlayer mp) {
+         if (mp != null) {
+             double fadeDuration = fadeOutLength; // Duration of the fade in seconds
+             int numSteps = 100; // Number of steps for the fade
+
+             double initialVolume = mp.getVolume();
+             double scaleFactor = Math.pow(0.010 / initialVolume, 1.5 / numSteps); // Exponential scale factor
+
+             Timeline timeline = new Timeline();
+
+             for (int i = 0; i < numSteps; i++) {
+                 final double volume = initialVolume * Math.pow(scaleFactor, i);
+                 final Duration time = Duration.millis(fadeDuration * (i + 10) / numSteps);
+
+                 KeyFrame keyFrame = new KeyFrame(time, event -> {
+                     mp.setVolume(volume);
+                 });
+                 timeline.getKeyFrames().add(keyFrame);
+             }
+
+             timeline.setOnFinished(event -> {
+                 if (Controller.isShiftDown()) {
+                     replay(mp);
+                 } else {
+                     mp.stop();
+                 }
+             });
+
+             timeline.play();
+         }
+     }
+
+
+
+           /*  private void fadeOutWithDelay(MediaPlayer mediaPlayer, double delayMillis, boolean isShiftDown) {
+             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(delayMillis), event -> fadeOut(mediaPlayer, isShiftDown)));
+             timeline.play();
+         } */
+
+      /*   private void shiftReleased() {
+             stopAllPlayers();
+         }
+
+         public synchronized void stopAllPlayers() {
+             double delay = 1000; // Delay in milliseconds before fade
+             for (Map.Entry<Media, MediaPlayer> entry : MPs.entrySet()) {
+                 MediaPlayer mp = entry.getValue();
+                 if(mp.getVolume() == masterVolume) {
+                     //PauseTransition delayTrans = new PauseTransition(Duration.millis(delay));
+                     //delayTrans.play();
+                     fadeOut(mp, false);
+                     delay += 100;
+                 }
+             }
+         } */
+
+
+         31 maí
+
+          /*   private synchronized void repeatingFadeOut(MediaPlayer mp) {
+                 if (mp != null) {
+                     Timeline timeline = createFadeOutTimeline(mp);
+                     timeline.setOnFinished(event -> {
+                         if (Controller.isCapsOn()) {
+                             replay(mp);
+                         } else {
+                             mp.stop();
+                         }
+                     });
+                     timeline.play();
+                 }
+             } */

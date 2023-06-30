@@ -1,0 +1,16 @@
+
+það sem er eftir:  // PASSA að tjékka í hverju skrefi hvort allt virki!!
+
+optimizea fadeOut time reikninga
+Delay í gang
+Metronome
+COMPRESS SAMPLES / annað format?
+note names
+transpose niður niður
+mouse pressed
+einfalda kóða
+hægt að skipta út SamplePack?
+ENDURHANNA ÚTLIT
+
+MAC MENUBAR
+DEPLOY

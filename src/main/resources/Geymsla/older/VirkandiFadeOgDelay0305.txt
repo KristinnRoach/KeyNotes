@@ -1,0 +1,75 @@
+
+    private synchronized void setupMediaPlayer(Media media, MediaPlayer mp) {
+        MPs.put(media, mp);
+        mp.setVolume(masterVolume);
+        mp.setOnEndOfMedia(mp::stop);
+        mp.setOnStopped(() -> {
+            MPs.remove(media);
+            mp.dispose();
+        });
+    }
+
+    public synchronized void playMedia(int noteNumber, int nrOfKeysPressed) {
+        Sample sample = samplePack.samples[noteNumber];
+
+        if (nrOfKeysPressed <= keyboardRollOver && MPs.size() < N) {
+            MediaPlayer mp = new MediaPlayer(sample.media);
+            setupMediaPlayer(sample.media, mp);
+            mp.play();
+            fadeOut(mp);
+        }
+    }
+
+    private synchronized void fadeOut(MediaPlayer mp) {
+
+        double initialVolume = mp.getVolume();
+
+        Timeline timeline = new Timeline();
+
+        int numSteps = 100; // Number of steps for the fade-out
+        double scaleFactor = Math.pow(0.01 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+        KeyFrame[] keyFrames = new KeyFrame[numSteps];
+        for (int i = 0; i < numSteps; i++) {
+            double volume = initialVolume * Math.pow(scaleFactor, i);
+            Duration time = Duration.millis(fadeOutLength * i / numSteps);
+            KeyFrame keyFrame = new KeyFrame(time, event -> mp.setVolume(volume));
+            keyFrames[i] = keyFrame;
+        }
+
+        if (Controller.isShiftDown() || Controller.isCapsOn()) {
+            handleDelayEffect(timeline, mp);
+            timeline.setOnFinished(event -> {
+                replayMp(mp);
+            });
+        } else {
+            timeline.setOnFinished(event -> {
+                mp.stop();
+            });
+            timeline.stop();
+        }
+
+        timeline.getKeyFrames().setAll(keyFrames);
+
+        timeline.playFromStart();
+    }
+    private synchronized void replayMp(MediaPlayer mp) {
+        if (Controller.isShiftDown() || Controller.isCapsOn()) {
+            mp.seek(Duration.ZERO);
+            mp.setVolume(masterVolume);
+            mp.play();
+            fadeOut(mp);
+        } else {
+            mp.stop();
+        }
+    }
+
+
+    private void handleDelayEffect(Timeline timeline, MediaPlayer mp) {
+        if (Controller.isShiftDown() && Controller.isCapsOn()) {
+            timeline.setCycleCount(Animation.INDEFINITE);
+            mp.setRate(2.0);
+            timeline.setRate(4.0);
+            timeline.setAutoReverse(true);
+        }
+    }

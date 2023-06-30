@@ -1,0 +1,90 @@
+    private static synchronized void addFadeKeyFrames(Timeline timeline, SamplePlayer player) { // synchronized?
+        double initialVolume = player.getVolume();
+        int numSteps = 100; // Number of steps for the fade-out
+        double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+        for (int i = 0; i < numSteps; i++) {
+            if (player.getVolume() <= 0.0001) { break; }  // ensure that volume does not become negative
+            double volume = initialVolume * Math.pow(scaleFactor, i);
+            Duration time = Duration.millis(fadeOutLength * i / numSteps);
+            KeyFrame keyFrame = new KeyFrame(time, event -> {
+                player.setVolume(volume);
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    }
+
+
+        private static synchronized void startFadeOut(SamplePlayer player) {
+            assert player != null;
+
+            // timeline.setCycleCount(3);  // INTERESTING
+
+            player.playerTimeline.timeline.play();
+
+            /*if (isDelayOn) {
+                SamplePlayer playerCopy = new SamplePlayer(player.media); // getMedia(?)
+                setupDelayTimeline(playerCopy);
+            } */
+        }
+
+
+        private static synchronized void setOnFinishedFade(Timeline timeline, SamplePlayer player) { // synchronized?
+           if (isLoopOn && !chokedPlayers.contains(player)) { // check if 'Loop' was on when note was triggered
+                loopOnFinished(timeline, player);
+           } else {
+                timeline.setOnFinished(event -> {
+                    player.stop();
+                    removeFromCurrentlyPlaying(player);
+                    //player.dispose(); //?
+                    timeline.stop();
+                });
+            }
+        }
+
+        private static synchronized void loopOnFinished(Timeline timeline, SamplePlayer player) {
+
+            // AtomicBoolean loopReleased = new AtomicBoolean(false);
+           // listenForLoopReleases(loopReleased); // checks if loop is released any time during the fade out
+
+            timeline.setOnFinished(event -> {
+                if ( (isLoopOn || isLoopLocked)  && !player.isReleased) { // && !chokedPlayers.contains(player) && !loopReleased.get() henda? // check if 'Loop' is STILL on and has not been released since note started
+                    replaySamplePlayer(player, masterVolume);   // þarf listener fyrir loopReleased?
+                    replayFadeOut(timeline, player);
+                } else {
+                    removeFromCurrentlyPlaying(player);
+                    player.stop();
+                    timeline.stop();
+                }
+            });
+        }
+    /*
+        private static void listenForLoopReleases(AtomicBoolean loopReleased) {
+            isLoopOnProperty.addListener((observable, oldValue, newValue) -> {
+                if (oldValue && !newValue) {
+                    loopReleased.set(true);
+                }
+            });
+            isSustainOnProperty.addListener((observable, oldValue, newValue) -> {
+                if (oldValue && !newValue) {
+                    loopReleased.set(true);
+                }
+            });
+        } */
+
+        private static synchronized void replaySamplePlayer(SamplePlayer player, double volume) {
+            player.stop(); // betra að hafa stop?
+            player.seek(Duration.ZERO);
+            player.setVolume(volume);
+            player.play();
+        }
+        private static void replayFadeOut(Timeline replaying, SamplePlayer player) {
+       /*     if(isDelayOn.get()) {
+                replaying.playFromStart();
+            } else { */
+            replaying.stop();  // ef ég vil að rythminn breytist ekki með slider þá bara playFromStart!
+            replaying.getKeyFrames().clear();
+            addFadeKeyFrames(replaying, player);
+            replaying.playFromStart();
+            // }
+        }

@@ -1,0 +1,15 @@
+
+
+    /*
+    public double getSliderValue() {
+        return fxLengthSlide.getValue();
+    }
+
+    public double getSliderMinValue() {
+        return fxLengthSlide.getMin();
+    }
+
+    public double getSliderMaxValue() {
+        return fxLengthSlide.getMax();
+    }
+*/

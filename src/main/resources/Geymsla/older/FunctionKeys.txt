@@ -1,0 +1,11 @@
+   /*
+    private static final List<Runnable> shiftReleaseListeners = new ArrayList<>();
+    public static void addShiftReleaseListener(Runnable listener) {
+        shiftReleaseListeners.add(listener);
+    }
+
+        for (Runnable listener : shiftReleaseListeners) {
+        listener.run(); // Notify the listeners
+    } /*
+
+    Hægt að nota td VK_SHIFT og allskonar til að búa til toggle function super easy!

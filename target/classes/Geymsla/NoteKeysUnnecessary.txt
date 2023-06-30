@@ -1,0 +1,116 @@
+package keynotes.vidmot;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class NoteKeys { }
+/*
+    private final String[] noteNames = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    private final int[] majorScale = { 1, 3, 5, 6, 8, 10, 12 };
+    private final int[] minorScale = { 1, 3, 4, 6, 8, 9, 11 };
+
+    // private final Set<Integer> minor = new HashSet<>(Arrays.asList(4, 9, 11, 16, 21, 23, 28, 33, 35, 40, 45, 47, 52));
+
+    private IntegerProperty noteNumber;
+
+    public int getScaleDegree() {
+        return scaleDegree;
+    }
+
+    private final KeyCode  keyCode;
+    private final Button button;
+    private int scaleDegree;
+    private int octave;
+    private String noteName;
+    private final char keyboardChar;
+
+    public KeyCode getKeyCode() {
+        return keyCode;
+    }
+
+    public int getNoteNumber() { return noteNumber.get(); }
+    public void setNoteNumber() {
+        this.noteNumber.set();
+    }
+
+    public void setNoteName() {
+        this.noteName = String.valueOf(scaleDegree) + octave;
+    }
+    public String getNoteName() {
+        return noteName;
+    }
+    public int getOctave() {
+        return octave;
+    }
+
+    public NoteKeys(KeyCode keyCode, Button button) {
+
+        this.keyCode = keyCode;
+        this.button = button;
+        this.keyboardChar = button.getText().charAt(0);
+        this.noteNumber = new SimpleIntegerProperty();
+        //this.chromaticScaleDegree = (noteNumber % 12)+1;
+        setOctave();
+        this.noteName = noteNames[scaleDegree] + octave;
+        addListeners();
+    }
+
+    private void setOctave(){
+        if (noteNumber.get() < 12) octave = 2;
+        else if (noteNumber.get() < 24) octave = 3;
+        else if (noteNumber.get() < 36) octave = 4;
+        else if (noteNumber.get() < 48) octave = 5;
+        else if (noteNumber.get() < 60) octave = 6;
+    }
+
+    void setMinor() {
+        if (scaleDegree == 4 || scaleDegree == 12) { scaleDegree -= 1; }
+    }
+    void setMajor() {
+        if (scaleDegree == 3 || scaleDegree == 11) { scaleDegree += 1; }
+    }
+    private void addListeners() {
+        Controller.transpositionProperty().addListener(((observable, oldValue, newValue) -> {
+            //noteNumber.set(noteNumber.get() + newValue.intValue());
+            scaleDegree = (noteNumber.get() % 12) + 1;
+            if (newValue.intValue() + scaleDegree > 12) { octave++; }
+                else if (newValue.intValue() + scaleDegree < 1) { octave--; }
+            setNoteName();
+            noteName = noteNames[scaleDegree] + octave;
+        }));
+    }
+}
+*/
+
+    /*    keycode_button_map = new HashMap<>();
+        keycode_int_map = new HashMap<>();
+        KeyCode[] keyCodes = { KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.SEMICOLON, KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7, KeyCode.DIGIT8, KeyCode.DIGIT9, KeyCode.DIGIT0 };
+        for (int i = 0; i < keyCodes.length; i++) {
+            keycode_button_map.put(keyCodes[i], buttons[i]);
+            keycode_int_map.put(keyCodes[i], keyIndicesMajor[i]);
+        }
+        int_noteNames_map = new HashMap<>();
+
+        int octave = 2;
+        for (int i = 0; i < 64; i++) {
+            String noteName = noteNames[i % noteNames.length];
+            noteName += octave;
+            int_noteNames_map.put(i, noteName);
+            if ((i+1) % noteNames.length == 0) { octave++; }
+        }
+
+
+        noteNumber.addListener(((observable, oldValue, newValue) -> {
+                chromaticScaleDegree = (newValue.intValue() % 12) + 1;
+                if ((chromaticScaleDegree % 12) == 0) { octave = getOctave() + 1; }
+                else if ((chromaticScaleDegree % 12) == 11) { octave = getOctave() - 1; }
+                noteName = noteNames[chromaticScaleDegree] + octave;
+                }));
+
+        */

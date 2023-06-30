@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane fx:id="fxBorderPane" prefHeight="300.0" prefWidth="590.0" stylesheets="" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keynotes.vidmot.Controller">
+    <center>
+        <GridPane fx:id="fxGrid" alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="545.0" vgap="5.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="fxK" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="K" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx1" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxQ" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Q" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </Button>
+                <Button fx:id="fxW" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="W" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxE" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="E" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxA" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="A" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxS" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="S" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxD" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="D" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="2" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="3" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxR" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="R" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxJ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="J" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxH" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="H" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxG" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="G" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxF" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="F" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="P" GridPane.columnIndex="9" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxO" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="O" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="I" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxU" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="U" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Y" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="T" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="9" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="8" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="7" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="6" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="5" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="4" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="V" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxC" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="C" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="X" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxZ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Z" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxÆ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Æ" GridPane.columnIndex="9" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxL" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="L" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxDot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="." GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxComma" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="," GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxM" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="M" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxN" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="N" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxB" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="B" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fx0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="0" GridPane.columnIndex="9" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                <Button fx:id="fxÞ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onDragDropped="#onDragDropped" onDragOver="#onDragOver" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Þ" GridPane.columnIndex="9" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <HBox fx:id="fxBottomHbox">
+            <Label fx:id="fxRootNote" focusTraversable="false" text="Root Note : C" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets bottom="5.0" right="5.0" top="5.0" />
+            </HBox.margin>
+            <padding>
+               <Insets bottom="5.0" left="25.0" right="10.0" top="5.0" />
+            </padding></Label>
+            <Button fx:id="fxTransDown" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" text="-" HBox.hgrow="ALWAYS">
+            <padding>
+               <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+            </padding>
+            <HBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </HBox.margin></Button>
+            <Button fx:id="fxTransUp" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" text="+" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+            </HBox.margin>
+            <padding>
+               <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+            </padding></Button>
+         <Button fx:id="fxTransReset" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" text="Reset">
+            <HBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </HBox.margin>
+            <padding>
+               <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+            </padding>
+         </Button>
+            <Button fx:id="fxShowNotes" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#noteNamesHandler" text="Show Notes" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </HBox.margin>
+            <padding>
+               <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+            </padding></Button>
+        </HBox>
+    </bottom>
+</BorderPane>

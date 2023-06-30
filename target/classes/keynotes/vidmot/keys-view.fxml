@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="fxBorderPane" minHeight="155.0" minWidth="300.0" prefHeight="310.0" prefWidth="600.0" stylesheets="" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="keynotes.vidmot.Controller">
+    <top>
+        <VBox alignment="CENTER">
+            <HBox fx:id="topBar" alignment="CENTER_LEFT" onDragDetected="#dragWindow" onMouseDragEntered="#dragWindow" prefHeight="25.0" BorderPane.alignment="TOP_CENTER">
+                <children>
+                    <Button fx:id="fxQuit" alignment="CENTER" mnemonicParsing="false" onAction="#quitApp" text="X" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                        <HBox.margin>
+                            <Insets left="5.0" right="5.0" />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="11.0" />
+                        </font>
+                    </Button>
+               <Button fx:id="fxMinimize" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimizeClick" onMouseClicked="#minimizeClick" text="-" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <font>
+                     <Font name="System Bold" size="11.0" />
+                  </font>
+               </Button>
+               <ToggleButton fx:id="fxSustain" onMouseClicked="#onFxSustainMouseClick" prefHeight="30.0" prefWidth="30.0" text="S" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+               </ToggleButton>
+               <ToggleButton fx:id="fxLoopLock" mnemonicParsing="false" onAction="#fxLoopLockHandler" prefHeight="20.0" text="Loop" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+               </ToggleButton>
+               <ToggleButton fx:id="fxDelay" mnemonicParsing="false" onAction="#fxDelayHandler" prefHeight="20.0" text="Delay" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+               </ToggleButton>
+               <Label prefHeight="20.0" text="Note Length :" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="5.0" top="2.0" />
+                  </HBox.margin>
+               </Label>
+                    <Slider fx:id="fxLengthSlide" blockIncrement="1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="100.0" value="100.0" HBox.hgrow="ALWAYS">
+                        <opaqueInsets>
+                            <Insets left="5.0" />
+                        </opaqueInsets>
+                        <HBox.margin>
+                            <Insets left="2.0" top="2.0" />
+                        </HBox.margin>
+                    </Slider>
+               <Label prefHeight="20.0" text="Volume :" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="5.0" top="2.0" />
+                  </HBox.margin>
+               </Label>
+                    <Slider fx:id="fxVolSlide" blockIncrement="1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="100.0" value="100.0" HBox.hgrow="ALWAYS">
+                        <opaqueInsets>
+                            <Insets left="5.0" />
+                        </opaqueInsets>
+                        <HBox.margin>
+                            <Insets left="2.0" top="2.0" />
+                        </HBox.margin>
+                    </Slider>
+                </children>
+                <BorderPane.margin>
+                    <Insets />
+                </BorderPane.margin>
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+                <VBox.margin>
+                    <Insets left="2.0" right="2.0" top="2.0" />
+                </VBox.margin>
+            <padding>
+               <Insets right="5.0" />
+            </padding>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox fx:id="fxVboxKeyboard" alignment="CENTER" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="55.0" prefWidth="500.0">
+                    <children>
+                        <Button fx:id="fx1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="1" HBox.hgrow="ALWAYS">
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </Button>
+                        <Button fx:id="fx2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="2" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="3" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="4" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="5" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="6" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="7" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="8" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="9" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fx0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="0" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="35.0" />
+                    </VBox.margin>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="55.0" prefWidth="500.0">
+                    <children>
+                        <Button fx:id="fxQ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Q" HBox.hgrow="ALWAYS">
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </Button>
+                        <Button fx:id="fxW" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="W" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="E" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxR" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="R" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="T" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Y" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxU" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="U" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="I" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxO" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="O" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="P" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets top="5.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets left="15.0" right="25.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="55.0" prefWidth="500.0">
+                    <children>
+                        <Button fx:id="fxA" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="A" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="S" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="D" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxF" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="F" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxG" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="G" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxH" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="H" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxJ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="J" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxK" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="K" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin></Button>
+                        <Button fx:id="fxL" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="L" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxÆ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Æ" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="25.0" right="15.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets top="5.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="55.0" prefWidth="500.0">
+                    <children>
+                        <Button fx:id="fxZ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Z" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="X" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxC" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="C" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="V" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin></Button>
+                        <Button fx:id="fxB" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="B" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxN" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="N" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxM" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="M" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxComma" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="," HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxDot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="fxÞ" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" onMousePressed="#mousePressedSample" prefHeight="50.0" prefWidth="50.0" text="Þ" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="5.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="35.0" right="5.0" />
+                    </VBox.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+        </VBox>
+    </center>
+   <bottom>
+       <HBox fx:id="fxBottomHbox" alignment="CENTER" prefHeight="30.0">
+           <Label fx:id="fxRootNote" alignment="CENTER" prefHeight="25.0" prefWidth="90.0" text="Root Note : C" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                   <Insets />
+               </HBox.margin>
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></Label>
+           <Button fx:id="fxTransDown" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" prefHeight="25.0" prefWidth="25.0" text="-" HBox.hgrow="ALWAYS">
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <HBox.margin>
+                   <Insets left="5.0" />
+               </HBox.margin></Button>
+           <Button fx:id="fxTransUp" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" prefHeight="25.0" prefWidth="25.0" text="+" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                   <Insets left="5.0" />
+               </HBox.margin>
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></Button>
+           <Button fx:id="fxTransReset" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#transpose" prefHeight="25.0" prefWidth="50.0" text="Reset" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                   <Insets left="10.0" />
+               </HBox.margin>
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+           </Button>
+           <ToggleButton fx:id="fxMinorMajor" mnemonicParsing="false" onAction="#minorMajorButton" prefHeight="25.0" prefWidth="100.0" text="Switch to Minor" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                   <Insets left="10.0" />
+               </HBox.margin>
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></ToggleButton>
+           <ToggleButton fx:id="fxShowNotes" mnemonicParsing="false" onAction="#noteNamesHandler" prefHeight="25.0" prefWidth="100.0" text="Show Notes" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                   <Insets left="10.0" />
+               </HBox.margin>
+               <padding>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></ToggleButton>
+         <ToggleButton fx:id="fxMetronome" onMouseClicked="#onFxMetronomeMouseClick" prefHeight="30.0" prefWidth="30.0" text="M" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </ToggleButton>
+         <Label fx:id="fxTempo" onMouseClicked="#fxTempoMouseClicked" onMouseDragged="#fxTempoMouseDragged" text="120 bpm">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </Label>
+       </HBox>
+   </bottom>
+</BorderPane>

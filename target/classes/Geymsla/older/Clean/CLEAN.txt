@@ -1,0 +1,54 @@
+    public static synchronized void playMedia(int key) {
+        Media media = mediasKeyMap.get(key);
+        // MediaPlayer longestPlaying = mediaPlayers.poll();
+        if (mediaPlayers.size() < N) {
+            MediaPlayer newMp = new MediaPlayer(media);
+            setupMediaPlayer(newMp);
+            newMp.play();
+        } /* else if (longestPlaying != null) {
+            System.out.println("Replacing longest playing");
+            longestPlaying.stop();
+            longestPlaying.dispose();
+            MediaPlayer newPlayer = new MediaPlayer(media);
+            setupMediaPlayer(newPlayer);
+            newPlayer.play();
+        } */
+        System.out.println(mediaPlayers.size());
+    }
+
+
+ /*   private void setupListeners() {
+        pressedKeys.addListener((ListChangeListener<KeyCode>) change -> {
+            while (change.next()) {
+                if (change.wasRemoved()) {
+                    List<? extends KeyCode> removed = change.getRemoved();
+                    System.out.println(removed);
+                    if (!removed.isEmpty()) {
+                        for (KeyCode keyCode : removed) {
+                            SampleHolder.releaseFade(keycode_int_map.get(keyCode));
+                            //System.out.println("Fade " + keycode_int_map.get(keyCode));
+                        } return;
+                    }
+                }
+            }
+        });
+    } */
+
+        public void addVolumeSlider(Slider fxVolSlide) {
+            fxVolSlide.valueProperty().addListener((observable, oldValue, newValue) -> {
+                double volume = newValue.doubleValue() / 100.0;
+                sampleUtils.setMasterVolume(volume);
+            });
+        }
+
+            private void fadeOut(MediaPlayer mp, Timeline fadeTimeline){
+                    Timeline timeline = new Timeline(
+                            new KeyFrame(Duration.seconds(releaseTime), new KeyValue(mp.volumeProperty(), 0)));
+                    timeline.setOnFinished(event -> {
+                        if (mp != null) {
+                            mp.stop();
+                            mp.dispose();
+                        }
+                    });
+                    timeline.play();
+                }
