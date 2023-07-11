@@ -1,5 +1,6 @@
 package keynotes.vinnsla;
 
+import javafx.scene.Node;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -150,7 +151,6 @@ class SamplePlayer {  // helper class for samples
     public void setOnEndOfMedia(Runnable r) { // nota?
         mp.setOnEndOfMedia(r);
     }
-
 }
 /*
     private static void setOnStopped(SamplePlayer player) {

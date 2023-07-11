@@ -1,5 +1,7 @@
 package keynotes.vinnsla;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -13,52 +15,39 @@ public class PlayerTimeline {
     public Set<PlayerTimeline> playingTimelines = new HashSet<>();
 
     // Static Fields
-
+    private static int currentSliderValue = 4;
     private static int tempo;
     public static void setTempo(int tmpo) {
         tempo = tmpo;
+        setFadeOutLength(currentSliderValue);
     }
     public static double getFadeOutLength() {
         return fadeOutLength;
     }
 
-    public static void setFadeOutLength(int fadeLength) {
-        System.out.println(fadeLength);
+    public static void setFadeOutLength(int sliderValue) { // slidervalue ranges from 8 - 1
+        currentSliderValue = sliderValue;
 
-        int tempoToMs = tempo * 1000;
+        int beatsPerSecond = tempo / 60;
+        System.out.println(beatsPerSecond);
+        double scaledValue = (1.0 / currentSliderValue) * beatsPerSecond * 1000; // exponential scaling for the slider values
+        fadeOutLength = (int) scaledValue;
 
-        int sixteenthNoteDuration = tempoToMs / 4;
-        int eighthNoteTripletDuration = tempoToMs / 3;
-        int eighthNoteDuration = tempoToMs / 2;
-        int quarterNoteDuration = tempoToMs;
-        int halfNoteDuration = tempoToMs * 2;
-        int wholeNoteDuration = tempoToMs * 4;
+        System.out.println(fadeOutLength);
+    }
 
+    public static void setFadeOutLength() {      // slidervalue ranges from 8 - 1
+        System.out.println(currentSliderValue);
 
-        if (fadeLength <= sixteenthNoteDuration) { // sixteenths
-            fadeOutLength = sixteenthNoteDuration;
-
-        } else if (fadeLength <= eighthNoteTripletDuration) { // 8th triplets
-            fadeOutLength = eighthNoteTripletDuration;
-
-        } else if (fadeLength <= eighthNoteDuration) {  // 8th
-            fadeOutLength = eighthNoteDuration;
-
-        } else if (fadeLength <= quarterNoteDuration) { // 4th
-            fadeOutLength = quarterNoteDuration;
-
-        } else if (fadeLength <= halfNoteDuration) {
-            fadeOutLength = halfNoteDuration;
-
-        } else {
-            fadeOutLength = wholeNoteDuration;
-        }
+        int beatsPerSecond = tempo / 60;
+        System.out.println(beatsPerSecond);
+        double scaledValue = (1.0 / currentSliderValue) * beatsPerSecond * 1000; // exponential scaling for the slider values
+        fadeOutLength = (int) scaledValue;
 
         System.out.println(fadeOutLength);
     }
 
     private static double fadeOutLength;
-
 
     // non-static Fields
 
@@ -67,7 +56,6 @@ public class PlayerTimeline {
     private boolean loopOnStartOfFade;
     private final double initialLoopLength;
     private boolean loopReleased = false;
-
 
     // Constructor
     public PlayerTimeline(SamplePlayer player) {
@@ -79,21 +67,22 @@ public class PlayerTimeline {
 
     // Methods
 
-    void releaseLoop() {
+    synchronized void releaseLoop() {
         this.loopReleased = true;
     }
 
-    synchronized void addFadeKeyFrames() { // synchronized?
+     synchronized void addFadeKeyFrames() { // synchronized?
         double initialVolume = player.getVolume();
-        int numSteps = 100; // Number of steps for the fade-out
-        double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+        int numSteps = 80; // Number of steps for the fade-out
+        double scaleFactor = Math.pow(0.001 / initialVolume, 1.5 / numSteps); // Exponential scale factor
 
         for (int i = 0; i < numSteps; i++) {
-            if (player.getVolume() <= 0.0001) {
+            if (player.getVolume() <= 0.00001) {
                 break;
             }  // ensure that volume does not become negative
             double volume = initialVolume * Math.pow(scaleFactor, i);
-            Duration time = Duration.millis(fadeOutLength * i / numSteps);
+            double stepDuration = fadeOutLength / numSteps; // duration for each step
+            Duration time = Duration.millis(stepDuration * i);
             KeyFrame keyFrame = new KeyFrame(time, event -> {
                 player.setVolume(volume);
             });
@@ -103,12 +92,13 @@ public class PlayerTimeline {
 
     synchronized void startFadeOut() {
         addFadeKeyFrames(); // could be here depending on witch gives better performance
+
         // timeline.setCycleCount(3);  // INTERESTING
 
         loopOnStartOfFade = Status.isLoopOn;
 
-        /*if (initialLoopLength != fadeOutLength) {
-            timeline.getKeyFrames().clear();
+        /*if (initialLoopLength != fadeOutLength) { // til að láta loopur sem eru þegar spilandi
+            timeline.getKeyFrames().clear();        // breytast með þegar fadeOutLength breytist
             addFadeKeyFrames();
         } */
 
@@ -116,12 +106,6 @@ public class PlayerTimeline {
         playingTimelines.add(this);
         player.isLooping = Status.isLoopOn; // óþarfi?
         setOnFinishedFade();
-
-/*
-        if(Status.isLoopOn){
-            startLoop();
-        } */
-        //LOOPTEST(player);
     }
 
 

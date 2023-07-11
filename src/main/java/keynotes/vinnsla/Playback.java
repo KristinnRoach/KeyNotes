@@ -2,6 +2,7 @@ package keynotes.vinnsla;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import keynotes.vidmot.Controller;
 
 import java.io.File;
 import java.util.*;
@@ -150,6 +151,8 @@ public class Playback {
     public static void initialize() {
         setSamplePackPath("src/main/resources/keynotes/vidmot/Audio/mp3/mp3_C2-C7");
         importSamplePack();
+        PlayerTimeline.setTempo(Controller.DEFAULT_TEMPO);
+        PlayerTimeline.setFadeOutLength();
     }
 
     /*

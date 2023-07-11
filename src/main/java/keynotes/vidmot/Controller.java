@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
-import javafx.scene.media.Media;
 import keynotes.vinnsla.Playback;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -34,13 +33,10 @@ import java.util.*;
  */
 public class Controller implements Initializable {
 
-    //private final ToolKeys toolKeys = new ToolKeys();
     @FXML
     private Button fxTransUp, fxTransDown, fxTransReset;
     @FXML
     private ToggleButton fxShowNotes, fxMinorMajor, fxLoopLock, fxDelay, fxSustain, fxMetronome;
-
-    // private ImageView fxMetronome;
 
     @FXML
     private Label fxRootNote, fxTempo;
@@ -54,7 +50,6 @@ public class Controller implements Initializable {
     private final int[] keyIndicesMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 12, 14, 16, 17, 19, 21, 23, 24, 26, 28, 24, 26, 28, 29, 31, 33, 35, 36, 38, 40, 36, 38, 40,41, 43, 45, 47, 48, 50, 52 };
     private final Set<Integer> minor = new HashSet<>(Arrays.asList(4, 9, 11, 16, 21, 23, 28, 33, 35, 40, 45, 47, 52));
     private final HashMap<KeyCode, Integer> keycode_int_map = new HashMap<>();
-   // private HashMap<Integer, String> int_noteNames_map = new HashMap<>();
     private final ObservableList<KeyCode> pressedNoteKeys = FXCollections.observableArrayList(); // Set<> frekar? // currently held down keyboard keys - henda?
     private String[] keyboardKeysIDs; // button ids
     @FXML
@@ -68,15 +63,10 @@ public class Controller implements Initializable {
     private final KeyCode[] noteKeyCodes = { KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.SEMICOLON, KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3, KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7, KeyCode.DIGIT8, KeyCode.DIGIT9, KeyCode.DIGIT0 };
     private final Set<KeyCode> toolKeySet = Set.of(KeyCode.TAB, KeyCode.SHIFT, KeyCode.CAPS, KeyCode.SPACE, KeyCode.BACK_QUOTE);
 
-    private final Media[] samples = Playback.getSamples(); // óþarfi að vera með samplepack sem klasa!
-    public static IntegerProperty transpositionProperty() {
-        return transposition;
-    }
-
     public static BooleanProperty isMajorProperty() {
         return isMajor;
     }
-    private static final IntegerProperty transposition = new SimpleIntegerProperty(12);
+    private static final IntegerProperty transposition = new SimpleIntegerProperty(0);
     public static int getTransposition() {
         return transposition.get();
     }
@@ -126,10 +116,13 @@ public class Controller implements Initializable {
 
     private void addNoteNameListener() { // má vera í TxtMethods?
         transposition.addListener((observableValue, oldValue, newValue) -> {
+            TxtMethods.setTransposition(getTransposition());
             TxtMethods.setNoteNames();
+            fxRootNote.setText("Root Note: " + TxtMethods.getRootNote());
         });
         isMajor.addListener((observableValue, oldValue, newValue) -> {
             TxtMethods.setNoteNames();
+            fxRootNote.setText("Root Note: " + TxtMethods.getRootNote());
         });
     }
 
@@ -229,13 +222,14 @@ public class Controller implements Initializable {
 
         if (keycode_button_map.containsKey(keyCode) && !pressedNoteKeys.contains(keyCode)) {
 
-            int keyIndex = keycode_int_map.get(keyCode) + transposition.get(); // trans byrja í 12?
+            int keyIndex = (keycode_int_map.get(keyCode) + transposition.get() + 12) % 76;
+            System.out.println(keyIndex);
 
             if (!isMajor.get() && (minor.contains(keyIndex - transposition.get()))) {
                 keyIndex -= 1;
             }
 
-            Playback.playMedia(keyIndex, pressedNoteKeys.size()); // þarf ekki pressed note keys út af rolloff, nema noti í öðru skyni
+            Playback.playMedia(keyIndex, pressedNoteKeys.size()); // þarf ekki pressed note keys út af rolloff, nema noti í öðru skyni (sem ég er að gera)
 
             Button button = keycode_button_map.get(keyCode);
             button.getStyleClass().add("buttonPressed");
@@ -246,10 +240,15 @@ public class Controller implements Initializable {
         else if (toolKeySet.contains(keyCode)) {
             ToolKeys.handleToolKeyPressed(keyCode);
             event.consume();
+
+        } else if (keyCode.equals(KeyCode.UP) || keyCode.equals(KeyCode.DOWN)) {
+            handleArrowKeys(keyCode);
         } else {
             event.consume(); // no default key press functions needed?
         }
     }
+
+
 
 
     @FXML
@@ -271,6 +270,14 @@ public class Controller implements Initializable {
             event.consume();
         } else {
             event.consume(); // no default key press functions needed?
+        }
+    }
+
+    private void handleArrowKeys(KeyCode keyCode) {
+        if (keyCode.equals(KeyCode.UP)) {
+            transposition.set((transposition.get() + 1) % (12));
+        } else if (keyCode.equals(KeyCode.DOWN)) {
+            transposition.set((transposition.get() - 1) % (-12));
         }
     }
 
@@ -328,16 +335,15 @@ public class Controller implements Initializable {
        // if (e.getSource() instanceof KeyEvent) {}
 
         if (e.getSource().equals(fxTransUp)) {
-            transposition.set((transposition.get() + 1) % 12);
+            transposition.set((transposition.get() + 1) % (12));
 
         } else if (e.getSource().equals(fxTransDown)) {
-
             transposition.set((transposition.get() - 1) % (-12));
+
         } else if (e.getSource().equals(fxTransReset)) {
-            transposition.set(12);
+            transposition.set(0);
             if (!isMajor.get()) { minorMajorButton(e); }
         }
-        fxRootNote.setText("Root Note: " + TxtMethods.getRootNote());
     }
 
     @FXML
@@ -349,7 +355,6 @@ public class Controller implements Initializable {
             fxMinorMajor.setText("Switch to Minor");
             isMajor.set(true);
         }
-        fxRootNote.setText("Root Note: " + TxtMethods.getRootNote());
     }
 
 
@@ -368,6 +373,12 @@ public class Controller implements Initializable {
             fxShowNotes.setText("Show Keyboard");
         }
     }
+
+    public void onFxSustainMouseClick(MouseEvent mouseEvent) {
+    }
+
+
+
 
     /**
     Sets up a Volume slider to control the main volume of all media-players
@@ -413,75 +424,20 @@ public class Controller implements Initializable {
     }
 */
 
-    private static final double MIN_TEMPO = 40.0;  // Minimum tempo (BPM)
-    private static final double MAX_TEMPO = 240.0; // Maximum tempo (BPM)
-    private static final double DEFAULT_TEMPO = 120.0; // Default tempo (BPM)
-
-    private static int tempo = 120;
-
     public void setUpLengthSlider(Slider fxLengthSlide) {
         // Set slider properties
-        fxLengthSlide.setMin(MIN_TEMPO);
-        fxLengthSlide.setMax(MAX_TEMPO);
-        fxLengthSlide.setValue(DEFAULT_TEMPO);
-
-        // Add tick marks for common note lengths
-        fxLengthSlide.setShowTickMarks(true);
-        fxLengthSlide.setMajorTickUnit(tempo/8.0);
-        fxLengthSlide.setMinorTickCount(3);
-        fxLengthSlide.setSnapToTicks(true);
+        fxLengthSlide.setMin(1.0);
+        fxLengthSlide.setMax(8.0);
+        fxLengthSlide.setValue(4.0);
+        fxLengthSlide.setBlockIncrement(1.0);
 
         // Listener for note length changes
         fxLengthSlide.valueProperty().addListener((observable, oldValue, newValue) -> {
-            PlayerTimeline.setFadeOutLength(newValue.intValue());
+            int invertedValue = 8 - newValue.intValue() + 1;
+            PlayerTimeline.setFadeOutLength(invertedValue);
         });
     }
 
-                /*
-                double selectedNoteLength = newValue.doubleValue();
-
-                if (selectedNoteLength <= sixteenthNoteLength) {
-                    PlayerTimeline.setFadeOutLength(sixteenthNoteLength);
-
-                } else if (selectedNoteLength <= eightNoteTriplets) {
-                    PlayerTimeline.setFadeOutLength(eightNoteTriplets);
-
-                } else if (selectedNoteLength <= eighthNoteLength) {
-                    PlayerTimeline.setFadeOutLength(eighthNoteLength);
-
-                } else if (selectedNoteLength <= quarterNoteLength) {
-                    PlayerTimeline.setFadeOutLength(quarterNoteLength);
-
-                } else if (selectedNoteLength <= halfNoteLength) {
-                    PlayerTimeline.setFadeOutLength(halfNoteLength);
-
-                } else {
-                    PlayerTimeline.setFadeOutLength(wholeNoteLength);
-
-                }  /*
-        });
-    }
-
-    private double roundToNoteLength(double val) {
-        double a = 8000;
-        double b = a / 2;
-        double c = a / 3;
-        double d = a / 4;
-
-        if (val <= d) {
-            return d;
-        } else if (val <= c) {
-            return c;
-        } else if (val <= b) {
-            return b;
-        } else {
-            return a;
-        }
-    }
-
-    public void onFxSustainMouseClick(MouseEvent mouseEvent) {
-
-    }
 
     /**
      * Allows the window to be dragged by clicking and holding the top bar
@@ -517,11 +473,14 @@ public class Controller implements Initializable {
     public void fxTempoMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             fxTempo.setText(DEFAULT_TEMPO + " bpm");
-            tempo = (int) DEFAULT_TEMPO;
-            PlayerTimeline.setTempo((int) DEFAULT_TEMPO);
-            fxLengthSlide.setMajorTickUnit(tempo / 8.0);
+            PlayerTimeline.setTempo(DEFAULT_TEMPO);
+            PlayerTimeline.setFadeOutLength((int) fxLengthSlide.getValue());
         }
     }
+
+    public static final int MIN_TEMPO = 40;  // Minimum tempo (BPM)
+    public static final int MAX_TEMPO = 240; // Maximum tempo (BPM)
+    public static final int DEFAULT_TEMPO = 100; // Default tempo (BPM)
 
     public void fxTempoMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -529,12 +488,8 @@ public class Controller implements Initializable {
             double tempoChange = -deltaY * 0.5;
             double newTempo = Math.max(MIN_TEMPO, Math.min(DEFAULT_TEMPO + tempoChange, MAX_TEMPO));
             fxTempo.setText((int) newTempo + " bpm");
-            tempo = (int) newTempo;
             PlayerTimeline.setTempo((int) newTempo);
-            fxLengthSlide.setMajorTickUnit(tempo / 8.0);
+            PlayerTimeline.setFadeOutLength((int) fxLengthSlide.getValue());
         }
-    }
-
-    public void onFxSustainMouseClick(MouseEvent mouseEvent) {
     }
 }

@@ -22,7 +22,10 @@ public final class TxtMethods {
     public static final int[] keyIndicesMinor = { 0, 2, 3, 5, 7, 8, 10, 12, 14, 15};
     public static String rootNote = "C";
     public static String getRootNote() { return rootNote; }
-    private static final IntegerProperty transposition = Controller.transpositionProperty();
+    private static int transposition = 0;
+    public static void setTransposition(int transpo) {
+        transposition = transpo;
+    }
     private static final BooleanProperty isMajor = Controller.isMajorProperty();
     public static boolean isFlatKey = false;
 
@@ -37,7 +40,7 @@ public final class TxtMethods {
             } else {
                 index = keyIndicesMinor[i % 10];
             }
-            index += transposition.get(); // óþarfi?
+            index += (transposition % 12); // óþarfi?
             if (index < 0) { index += 12; }
 
             if (isFlatKey) {
@@ -55,15 +58,15 @@ public final class TxtMethods {
 
         // get verið með takka í GUI til með b/# til að skipta ef fólk vill, líklega óþarfi
 
-        rootNote = noteNamesSharp[(transposition.get()) % 12];
+        rootNote = noteNamesSharp[(transposition % noteNamesSharp.length + noteNamesSharp.length) % noteNamesSharp.length];
 
         if (isMajor.get()) {
             switch (rootNote) {
-                case "D#", "G#", "A#" -> rootNote = noteNamesFlat[(transposition.get()) % 12];
+                case "D#", "G#", "A#" -> rootNote = noteNamesFlat[(transposition % noteNamesFlat.length + noteNamesFlat.length) % noteNamesFlat.length];
             }
         } else {
             switch (rootNote) {
-                case "D#", "A#" -> rootNote = noteNamesFlat[(transposition.get()) % 12];
+                case "D#", "A#" -> rootNote = noteNamesFlat[(transposition % noteNamesFlat.length + noteNamesFlat.length) % noteNamesFlat.length];
             }
         }
         setIsFlat();

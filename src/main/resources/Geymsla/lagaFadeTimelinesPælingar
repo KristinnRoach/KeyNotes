@@ -1,0 +1,29 @@
+     void addFadeKeyFrames() { // synchronized?
+         double initialVolume = player.getVolume();
+         int numSteps = 100; // Number of steps for the fade-out
+         double scaleFactor = Math.pow(0.001 / initialVolume, 1.0 / numSteps); // Exponential scale factor
+
+         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+         for (int i = 0; i < numSteps; i++) {
+             if (player.getVolume() <= 0.00001) {
+                 break;
+             }  // ensure that volume does not become negative
+             double volume = initialVolume * Math.pow(scaleFactor, i);
+             long delay = (long) fadeOutLength * i / numSteps; // Calculate the delay for each step
+
+             int finalI = i;
+             executor.schedule(() -> {
+                 player.setVolume(volume);
+
+                 // Check if this is the last step
+                 if (finalI == numSteps - 1) {
+                     // Call your method here
+                     player.replay();
+                     addFadeKeyFrames();
+                 }
+             }, delay, TimeUnit.MILLISECONDS);
+         }
+
+         executor.shutdown();
+     }
