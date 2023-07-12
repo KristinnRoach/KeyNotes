@@ -1,7 +1,5 @@
 package keynotes.vinnsla;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -15,36 +13,27 @@ public class PlayerTimeline {
     public Set<PlayerTimeline> playingTimelines = new HashSet<>();
 
     // Static Fields
-    private static int currentSliderValue = 4;
+    private static int currentSliderValue;
+    public static void setCurrentSliderValue(int value) {
+        currentSliderValue = value;
+    }
     private static int tempo;
     public static void setTempo(int tmpo) {
         tempo = tmpo;
-        setFadeOutLength(currentSliderValue);
     }
     public static double getFadeOutLength() {
         return fadeOutLength;
     }
 
-    public static void setFadeOutLength(int sliderValue) { // slidervalue ranges from 8 - 1
-        currentSliderValue = sliderValue;
+    public static void setFadeOutLength() { // slidervalue ranges from 8 - 1
 
-        int beatsPerSecond = tempo / 60;
-        System.out.println(beatsPerSecond);
-        double scaledValue = (1.0 / currentSliderValue) * beatsPerSecond * 1000; // exponential scaling for the slider values
-        fadeOutLength = (int) scaledValue;
+        double beatsPerSecond = tempo / 60.0;
+        double intervalRatio = 1.0 / currentSliderValue;
 
-        System.out.println(fadeOutLength);
-    }
+        double scaledValue = intervalRatio * beatsPerSecond * 1000; // exponential scaling for the slider values
+        fadeOutLength = scaledValue;
 
-    public static void setFadeOutLength() {      // slidervalue ranges from 8 - 1
-        System.out.println(currentSliderValue);
-
-        int beatsPerSecond = tempo / 60;
-        System.out.println(beatsPerSecond);
-        double scaledValue = (1.0 / currentSliderValue) * beatsPerSecond * 1000; // exponential scaling for the slider values
-        fadeOutLength = (int) scaledValue;
-
-        System.out.println(fadeOutLength);
+        System.out.println("bpm: " + tempo + " bps: " + beatsPerSecond + " note length: 1 / " + currentSliderValue + " milliseconds " + fadeOutLength);
     }
 
     private static double fadeOutLength;
@@ -139,7 +128,7 @@ public class PlayerTimeline {
             }
         }
     }
-    private Timer timer;
+    private Timer timer;       // LONG ER EKKI KOMMU TALA BARA STÓR HEILTALA ÞANNIG DÓT FYRIR NEÐAN VAR EKKI AÐ MARKA, SKOÐA AFTUR EF NENNI
 
     public void startLoop() {
         long fadeLong = (long) fadeOutLength;

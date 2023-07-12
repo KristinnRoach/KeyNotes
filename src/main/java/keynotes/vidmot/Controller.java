@@ -223,7 +223,7 @@ public class Controller implements Initializable {
         if (keycode_button_map.containsKey(keyCode) && !pressedNoteKeys.contains(keyCode)) {
 
             int keyIndex = (keycode_int_map.get(keyCode) + transposition.get() + 12) % 76;
-            System.out.println(keyIndex);
+            // System.out.println(keyIndex);
 
             if (!isMajor.get() && (minor.contains(keyIndex - transposition.get()))) {
                 keyIndex -= 1;
@@ -434,7 +434,8 @@ public class Controller implements Initializable {
         // Listener for note length changes
         fxLengthSlide.valueProperty().addListener((observable, oldValue, newValue) -> {
             int invertedValue = 8 - newValue.intValue() + 1;
-            PlayerTimeline.setFadeOutLength(invertedValue);
+            PlayerTimeline.setCurrentSliderValue(invertedValue);
+            PlayerTimeline.setFadeOutLength();
         });
     }
 
@@ -474,7 +475,7 @@ public class Controller implements Initializable {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             fxTempo.setText(DEFAULT_TEMPO + " bpm");
             PlayerTimeline.setTempo(DEFAULT_TEMPO);
-            PlayerTimeline.setFadeOutLength((int) fxLengthSlide.getValue());
+            PlayerTimeline.setFadeOutLength();
         }
     }
 
@@ -487,9 +488,10 @@ public class Controller implements Initializable {
             double deltaY = mouseEvent.getY();
             double tempoChange = -deltaY * 0.5;
             double newTempo = Math.max(MIN_TEMPO, Math.min(DEFAULT_TEMPO + tempoChange, MAX_TEMPO));
+
             fxTempo.setText((int) newTempo + " bpm");
             PlayerTimeline.setTempo((int) newTempo);
-            PlayerTimeline.setFadeOutLength((int) fxLengthSlide.getValue());
+            PlayerTimeline.setFadeOutLength();
         }
     }
 }

@@ -113,7 +113,7 @@ public class Playback {
 
             addToCurrentlyPlaying(player);
 
-            System.out.println(currentlyPlayingMap.size());
+            //System.out.println(currentlyPlayingMap.size());
 
         }
     }
@@ -144,7 +144,6 @@ public class Playback {
         for (SamplePlayer player : playingPlayersSet) {
             player.isLooping = false;
             player.isReleased = true;
-            System.out.println("Momentary Release : player.isLooping : false ");
         }
     }
 
