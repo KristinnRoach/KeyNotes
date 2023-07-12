@@ -9,7 +9,6 @@ import javafx.scene.input.MouseButton;
 import keynotes.vinnsla.Playback;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -49,8 +48,8 @@ public class Controller implements Initializable {
     private final HashMap<KeyCode, Button> keycode_button_map = new HashMap<>();
     private final int[] keyIndicesMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 12, 14, 16, 17, 19, 21, 23, 24, 26, 28, 24, 26, 28, 29, 31, 33, 35, 36, 38, 40, 36, 38, 40,41, 43, 45, 47, 48, 50, 52 };
     private final Set<Integer> minor = new HashSet<>(Arrays.asList(4, 9, 11, 16, 21, 23, 28, 33, 35, 40, 45, 47, 52));
-    private final HashMap<KeyCode, Integer> keycode_int_map = new HashMap<>();
-    private final ObservableList<KeyCode> pressedNoteKeys = FXCollections.observableArrayList(); // Set<> frekar? // currently held down keyboard keys - henda?
+    private final HashMap<KeyCode, Integer> allNotesMap = new HashMap<>();
+    private final HashMap <KeyCode, Integer> currentlyPressedMap = new HashMap<>();
     private String[] keyboardKeysIDs; // button ids
     @FXML
     private Button fxQuit, fxMinimize;
@@ -104,11 +103,12 @@ public class Controller implements Initializable {
         addKeyListeners();
         addNoteNameListener();
 
+        setUpVolumeSlider(fxVolSlide);
+        setUpLengthSlider(fxLengthSlide);
+
         TxtMethods.initialize();
         Playback.initialize();
 
-        setUpVolumeSlider(fxVolSlide);
-        setUpLengthSlider(fxLengthSlide);
         //createNoteKeySet();
         //playback.createMetronome();
         setUpFocus();
@@ -187,7 +187,7 @@ public class Controller implements Initializable {
     private void initializeMaps() {
         for(int i = 0; i < buttons.length; i++) {
             keycode_button_map.put(noteKeyCodes[i], buttons[i]);
-            keycode_int_map.put(noteKeyCodes[i], keyIndicesMajor[i]);
+            allNotesMap.put(noteKeyCodes[i], keyIndicesMajor[i]);
             // keycode_media_map.put(noteKeyCodes[i], media[i]);
         }
     }
@@ -220,21 +220,21 @@ public class Controller implements Initializable {
         KeyCode keyCode = event.getCode();
         // System.out.println("Keycode: " + code);
 
-        if (keycode_button_map.containsKey(keyCode) && !pressedNoteKeys.contains(keyCode)) {
+        if (keycode_button_map.containsKey(keyCode) && !currentlyPressedMap.containsKey(keyCode)) {
 
-            int keyIndex = (keycode_int_map.get(keyCode) + transposition.get() + 12) % 76;
+            int keyIndex = (allNotesMap.get(keyCode) + transposition.get() + 12) % 76;
             // System.out.println(keyIndex);
 
             if (!isMajor.get() && (minor.contains(keyIndex - transposition.get()))) {
                 keyIndex -= 1;
             }
 
-            Playback.playMedia(keyIndex, pressedNoteKeys.size()); // þarf ekki pressed note keys út af rolloff, nema noti í öðru skyni (sem ég er að gera)
+            Playback.playMedia(keyIndex, currentlyPressedMap.size()); // þarf ekki pressed note keys út af rolloff, nema noti í öðru skyni (sem ég er að gera)
 
             Button button = keycode_button_map.get(keyCode);
             button.getStyleClass().add("buttonPressed");
 
-            pressedNoteKeys.add(keyCode);
+            currentlyPressedMap.put(keyCode, keyIndex);
             event.consume();
         }
         else if (toolKeySet.contains(keyCode)) {
@@ -255,13 +255,14 @@ public class Controller implements Initializable {
     protected void onKeyReleased(KeyEvent event) {
         KeyCode keyCode = event.getCode();
 
-        if (pressedNoteKeys.contains(keyCode)) {
+        if (currentlyPressedMap.containsKey(keyCode)) {
 
             Button button = keycode_button_map.get(keyCode);
             button.getStyleClass().remove("buttonPressed");
-            pressedNoteKeys.remove(keyCode);
 
-            Playback.noteKeyReleased(keycode_int_map.get(keyCode));
+            Playback.noteKeyReleased(currentlyPressedMap.get(keyCode));
+            currentlyPressedMap.remove(keyCode);
+
 
             event.consume();
         }
@@ -426,15 +427,15 @@ public class Controller implements Initializable {
 
     public void setUpLengthSlider(Slider fxLengthSlide) {
         // Set slider properties
+        fxLengthSlide.setBlockIncrement(1.0);
         fxLengthSlide.setMin(1.0);
         fxLengthSlide.setMax(8.0);
         fxLengthSlide.setValue(4.0);
-        fxLengthSlide.setBlockIncrement(1.0);
+        PlayerTimeline.setCurrentSliderValue(4);
 
         // Listener for note length changes
         fxLengthSlide.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int invertedValue = 8 - newValue.intValue() + 1;
-            PlayerTimeline.setCurrentSliderValue(invertedValue);
+            PlayerTimeline.setCurrentSliderValue(newValue.intValue());
             PlayerTimeline.setFadeOutLength();
         });
     }

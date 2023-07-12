@@ -25,15 +25,13 @@ public class PlayerTimeline {
         return fadeOutLength;
     }
 
-    public static void setFadeOutLength() { // slidervalue ranges from 8 - 1
+    public static void setFadeOutLength() { // slidervalue ranges from 1 - 8
 
-        double beatsPerSecond = tempo / 60.0;
-        double intervalRatio = 1.0 / currentSliderValue;
+        double quarterNoteDuration = 60000.0 / tempo;
 
-        double scaledValue = intervalRatio * beatsPerSecond * 1000; // exponential scaling for the slider values
-        fadeOutLength = scaledValue;
+        fadeOutLength = (quarterNoteDuration / 2) * currentSliderValue;
 
-        System.out.println("bpm: " + tempo + " bps: " + beatsPerSecond + " note length: 1 / " + currentSliderValue + " milliseconds " + fadeOutLength);
+        System.out.println("bpm: " + tempo + " length in millisec: " + fadeOutLength + " slider value " + currentSliderValue);
     }
 
     private static double fadeOutLength;

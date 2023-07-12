@@ -1,6 +1,5 @@
 package keynotes.vinnsla;
 
-import javafx.scene.Node;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -26,9 +25,13 @@ class SamplePlayer {  // helper class for samples
 
     public MediaPlayer mp;
     public double startTime;
-    public boolean isPlaying;
+    public boolean isCopy;
+
+    public boolean isPlaying() { return mp.getStatus() == MediaPlayer.Status.PLAYING; }
     public boolean isLooping;
     public boolean isReleased;
+
+    public SamplePlayer previousPlayer;
 
     public PlayerTimeline playerTimeline;
 
@@ -41,11 +44,14 @@ class SamplePlayer {  // helper class for samples
                                             // CONSTRUCTORS
 
 
-    public SamplePlayer(Media media, int mediaIndex) {
+    public SamplePlayer(Media media, int mediaIndex, boolean isCopy) {
         this.media = media;
         this.mp = new MediaPlayer(media);
         this.mediaIndex = mediaIndex;
+        this.setVolume(SamplePlayer.masterVolume);
+        this.startTime = -1;
         this.isLooping = Status.isLoopOn;
+        this.isCopy = isCopy;
         this.playerTimeline = new PlayerTimeline(this); // creates timeline for this specific mediaplayers volume fade out
         setupMediaPlayer();
         //addListeners();
@@ -79,21 +85,30 @@ class SamplePlayer {  // helper class for samples
         mp.setOnEndOfMedia(mp::stop);
         mp.setOnStopped(() -> {
             mp.seek(Duration.ZERO);
-            this.isPlaying = false;
-            //Playback.removeFromCurrentlyPlaying(this);
             if (!this.isLooping) {
-                //this.startTime = -1; // óþarfi?
-                //Playback.removeFromCurrentlyPlaying(this);
+                this.startTime = -1;
+                Playback.removeFromCurrentlyPlaying(this);
+                if (this.isCopy) {
+                    mp.dispose();
+                }
             } else {
                 this.isLooping = Status.isLoopOn;
             }
         });
     }
-                                            // STATIC METHODS
+                                            // METHODS
 
-    public void disposeOnStop() {
-        mp.setOnStopped(mp::dispose);
+    public void disposeOnFinished() {
+        mp.setOnStopped(() -> {
+            if (!this.isLooping) {
+                Playback.removeFromCurrentlyPlaying(this);
+                mp.dispose();
+            } else {
+                this.isLooping = Status.isLoopOn;
+            }
+        });
     }
+
 
     synchronized void replay() {
         mp.stop(); // seek á að gerast í onstopped

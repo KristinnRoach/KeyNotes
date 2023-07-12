@@ -21,27 +21,22 @@ public class Playback {
     public static Media[] getSamples() {
         return samples;
     }
-    private static final int MAX = 40; // number of allowed active media players
+    private static final int MAX = 40; // number of simultaneously playing MediaPlayers allowed
     private static final int keyboardRollOver = 6; // number of keys that can be pressed at the same time on a macbook keyboard
 
-    public static Set<SamplePlayer> getPlayingPlayersSet() {
-        return playingPlayersSet;
-    }
-
     private static final Set<SamplePlayer> playingPlayersSet = new HashSet<>(); // set of currently playing SamplePlayers
-    private static final Map<Media, SamplePlayer> currentlyPlayingMap = new HashMap<>(); // set of currently playing SamplePlayers
+    private static final Map<Integer, SamplePlayer> currentlyPlayingMap = new HashMap<>(); // set of currently playing SamplePlayers
     private static final Queue<SamplePlayer> playingFIFO = new LinkedList<>();
     public static void addToCurrentlyPlaying(SamplePlayer samplePlayer) {
         playingPlayersSet.add(samplePlayer);
-        currentlyPlayingMap.put(samplePlayer.media, samplePlayer);
+        currentlyPlayingMap.put(samplePlayer.mediaIndex, samplePlayer);
         playingFIFO.add(samplePlayer);
     }
     public static void removeFromCurrentlyPlaying(SamplePlayer samplePlayer) {
         playingPlayersSet.remove(samplePlayer);
-        currentlyPlayingMap.remove(samplePlayer.media);
+        currentlyPlayingMap.remove(samplePlayer.mediaIndex);
         playingFIFO.remove(samplePlayer);
     }
-
 
     private static double masterVolume; // volume of all MediaPlayers
     public static double getMasterVolume() {
@@ -61,8 +56,7 @@ public class Playback {
         for (int i = 0; i < files.length; i++) {
             Media media = new Media(files[i].toURI().toString());
             samples[i] = media;
-            samplePack[i] = new SamplePlayer(samples[i], i);
-            samplePack[i].isPlaying = false;
+            samplePack[i] = new SamplePlayer(samples[i], i, false);
         }
     }
 
@@ -91,16 +85,14 @@ public class Playback {
         if (nrOfKeysPressed <= keyboardRollOver && currentlyPlayingMap.size() < MAX) {
             SamplePlayer player;
 
-            if ( !samplePack[mediaIndex].isPlaying ) { // use an existing mediaplayer if it is not already playing
+            if ( !samplePack[mediaIndex].isPlaying() ) { // use an existing mediaplayer if it is not already playing
                 player = samplePack[mediaIndex];
+                player.setVolume(masterVolume);
             }
             else {
-                player = new SamplePlayer(samples[mediaIndex], mediaIndex);
-                samplePack[mediaIndex] = player;
+                player = new SamplePlayer(samples[mediaIndex], mediaIndex, true);
             }
-            player.setVolume(masterVolume);
             player.play();
-            player.isPlaying = true;
             player.setStartTime();
             previousPlayer = mostRecentPlayer;
             mostRecentPlayer = player;
@@ -114,34 +106,21 @@ public class Playback {
             addToCurrentlyPlaying(player);
 
             //System.out.println(currentlyPlayingMap.size());
-
         }
     }
-/*
-    private static synchronized void chokePreviousPlayers() {
-        double timeSinceNoteStart = System.currentTimeMillis() - previousPlayer.startTime;
-        if (timeSinceNoteStart >= 100) {
-            chokedPlayers.add(previousPlayer);
-        }
-    } */
 
     public static synchronized void noteKeyReleased(int mediaIndex) {
         if (isSustainOn) {
-            /*SamplePlayer player = samplePack[mediaIndex];
-            //System.out.println( player.mediaIndex);
-            //SamplePlayer player = currentlyPlayingMap.get(samples[mediaIndex]);
-
-            //PlayerTimeline playerTimeline = player.playerTimeline;
-            assert playerTimeline != null;
-            playerTimeline.startFadeOut();
-            */
-
-            samplePack[mediaIndex].playerTimeline.startFadeOut();
+            if (currentlyPlayingMap.containsKey(mediaIndex) && currentlyPlayingMap.get(mediaIndex).isPlaying() ) { // má líklega henda
+                currentlyPlayingMap.get(mediaIndex).playerTimeline.startFadeOut();
+            } else {
+                System.out.println("ERROR: Could not find playing player to be released on noteKey release. Does playing map contain player? " + currentlyPlayingMap.containsKey(mediaIndex));
+            }
         }
     } // eitthvað kúl með delay?
 
     public static void releaseCurrentlyLooping() {
-        for (SamplePlayer player : playingPlayersSet) {
+        for (SamplePlayer player : playingFIFO) {
             player.isLooping = false;
             player.isReleased = true;
         }

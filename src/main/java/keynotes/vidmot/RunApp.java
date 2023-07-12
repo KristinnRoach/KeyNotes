@@ -24,8 +24,8 @@ public class RunApp extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 310);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setTitle("KeyNotes");
-        stage.initStyle(StageStyle.TRANSPARENT);
-        scene.setFill(Color.TRANSPARENT);
+        // stage.initStyle(StageStyle.TRANSPARENT);
+        // scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         Controller controller = fxmlLoader.getController();
         scene.setOnKeyPressed(controller::onKeyPressed);
