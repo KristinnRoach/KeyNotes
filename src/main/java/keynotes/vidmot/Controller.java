@@ -8,7 +8,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
 import keynotes.vinnsla.Playback;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -35,7 +34,7 @@ public class Controller implements Initializable {
     @FXML
     private Button fxTransUp, fxTransDown, fxTransReset;
     @FXML
-    private ToggleButton fxShowNotes, fxMinorMajor, fxLoopLock, fxDelay, fxSustain, fxMetronome;
+    private ToggleButton fxShowNotes, fxMinorMajor, fxLoopLock, fxDelay, fxSustain, fxMetronome, fxSyncNSpace;
 
     @FXML
     private Label fxRootNote, fxTempo;
@@ -168,6 +167,8 @@ public class Controller implements Initializable {
         fxVolSlide.setFocusTraversable(false);
         fxLengthSlide.setFocusTraversable(false);
         fxSustain.setFocusTraversable(false);
+        fxSyncNSpace.setFocusTraversable(false);
+
     }
 
     /**
@@ -472,6 +473,11 @@ public class Controller implements Initializable {
         stage.setIconified(true);
     }
 
+
+    public void fxSyncNSpaceHandler(ActionEvent e) {
+        boolean isItTrue = fxSyncNSpace.isSelected();
+        PlayerTimeline.setSyncNspace(isItTrue);
+    }
     public void fxTempoMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             fxTempo.setText(DEFAULT_TEMPO + " bpm");
@@ -482,7 +488,7 @@ public class Controller implements Initializable {
 
     public static final int MIN_TEMPO = 40;  // Minimum tempo (BPM)
     public static final int MAX_TEMPO = 240; // Maximum tempo (BPM)
-    public static final int DEFAULT_TEMPO = 100; // Default tempo (BPM)
+    public static final int DEFAULT_TEMPO = 120; // Default tempo (BPM)
 
     public void fxTempoMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {

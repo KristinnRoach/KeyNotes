@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class PlayerTimeline {
 
-    public Set<PlayerTimeline> playingTimelines = new HashSet<>();
+    public static Set<PlayerTimeline> playingTimelines = new HashSet<>();
 
     // Static Fields
     private static int currentSliderValue;
@@ -35,6 +35,21 @@ public class PlayerTimeline {
     }
 
     private static double fadeOutLength;
+    private static int grooveSpacy = 3; // GUI button?
+    private static boolean syncNspace;
+    public static void setSyncNspace(boolean isIt){
+        syncNspace = isIt;
+        if(syncNspace) {
+            for (PlayerTimeline pt : playingTimelines) {
+                turnOnSyncNSpace(pt);
+            }
+        }
+    }
+
+    private static void turnOnSyncNSpace(PlayerTimeline pt) {
+        pt.timeline.setCycleCount(grooveSpacy);
+        // væri hægt að í staðinn f að grooveSpacy séu bara tölur að sé líka mismunandi vibe ef það er stemmari en gæti verið kanínuhola !!
+    }
 
     // non-static Fields
 
@@ -80,7 +95,7 @@ public class PlayerTimeline {
     synchronized void startFadeOut() {
         addFadeKeyFrames(); // could be here depending on witch gives better performance
 
-        // timeline.setCycleCount(3);  // INTERESTING
+        if(syncNspace) { turnOnSyncNSpace(this); }
 
         loopOnStartOfFade = Status.isLoopOn;
 
@@ -99,12 +114,13 @@ public class PlayerTimeline {
     synchronized void setOnFinishedFade() { // synchronized?
         timeline.setOnFinished(event -> {
             if (loopOnStartOfFade && Status.isLoopOn && player.isLooping) {    // && !chokedPlayers.contains(player) && !loopReleased.get() henda? // check if 'Loop' is STILL on and has not been released since note started
+                if(syncNspace) { turnOnSyncNSpace(this); }
+                else { timeline.setCycleCount(1); }
                 player.replay();
                 replayFadeOut();
             } else {
                 player.isLooping = false;
                 player.stop();
-                //player.dispose(); //?
                 timeline.stop();
                 playingTimelines.remove(this);
             }

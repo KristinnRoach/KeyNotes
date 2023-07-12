@@ -337,7 +337,7 @@
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets />
+                <Insets bottom="-10.0" top="-10.0" />
             </BorderPane.margin>
          <padding>
             <Insets left="5.0" right="5.0" />
@@ -382,13 +382,18 @@
                <padding>
                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></ToggleButton>
-           <ToggleButton fx:id="fxShowNotes" mnemonicParsing="false" onAction="#noteNamesHandler" prefHeight="25.0" prefWidth="100.0" text="Show Notes" HBox.hgrow="ALWAYS">
+           <ToggleButton fx:id="fxShowNotes" mnemonicParsing="false" onAction="#noteNamesHandler" prefHeight="25.0" prefWidth="80.0" text="Show Notes" HBox.hgrow="ALWAYS">
                <HBox.margin>
                    <Insets left="10.0" />
                </HBox.margin>
                <padding>
                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></ToggleButton>
+         <ToggleButton fx:id="fxSyncNSpace" layoutX="486.0" layoutY="10.0" onAction="#fxSyncNSpaceHandler" onMouseClicked="#onFxMetronomeMouseClick" prefHeight="30.0" prefWidth="30.0" text="!">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </ToggleButton>
          <ToggleButton fx:id="fxMetronome" onMouseClicked="#onFxMetronomeMouseClick" prefHeight="30.0" prefWidth="30.0" text="M" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets left="10.0" />
@@ -399,6 +404,9 @@
                <Insets left="10.0" />
             </HBox.margin>
          </Label>
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
        </HBox>
    </bottom>
 </BorderPane>
